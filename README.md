@@ -10,4 +10,5 @@ It is meant for developers.
     <img alt="GitHub issues" src="https://img.shields.io/github/issues/Smyrnis/UbuntuRestore?style=flat-"> 
 </p>
 
-visit WEBSITE HERE   <br>   <img alt="UbuntuRestore" src="images/U.png" href="https://smyrnis.github.io/UbuntuRestore/">
+<strong>visit WEBSITE HERE</strong><br>   
+<a href="https://smyrnis.github.io/UbuntuRestore/"><img alt="UbuntuRestore" src="images/U.png"></a>
