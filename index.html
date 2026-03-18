@@ -7,12 +7,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/tabs.css">
+  <link rel="stylesheet" href="css/presets.css">
   <link rel="icon" type="image/png" href="images/U.png">
 </head>
 <body>
 <div class="shell">
 
-  <!-- HEADER -->
   <header>
     <div class="logo-area">
       <h1>Ubuntu <span>Restore</span></h1>
@@ -20,688 +21,241 @@
     </div>
     <div class="header-actions">
       <span class="badge" id="total-count">0 packages selected</span>
+      <button class="btn-clear" onclick="clearAll()" title="Clear all selections">Clear all</button>
     </div>
   </header>
 
-  <!-- MAIN -->
-  <main class="main-content">
+  <nav class="tab-bar" role="tablist">
+    <button class="tab-btn active" data-tab="packages" role="tab" aria-selected="true" onclick="switchTab('packages')">
+      <span class="tab-label">Build Script</span>
+    </button>
+    <button class="tab-btn" data-tab="presets" role="tab" aria-selected="false" onclick="switchTab('presets')">
+      <span class="tab-label">Ready Packages</span>
+      <span class="tab-badge"></span>
+    </button>
+  </nav>
 
-    <!-- SYSTEM -->
-    <div class="section">
-      <div class="section-header">
-        <div class="section-icon" style="background:rgba(232,112,58,0.12)">⚡</div>
-        <div><div class="section-title">System Update</div></div>
-      </div>
-      <div class="options-grid">
-        <div class="option-card selected" id="sys-update-card" onclick="toggleSysCard('sys-update')">
-          <span class="check-box">✓</span><span class="option-label">apt update &amp; upgrade</span><span class="option-tag">recommended</span>
+  <div class="tab-content-wrapper">
+
+    <!-- BUILD SCRIPT TAB -->
+    <div id="tab-packages" class="tab-pane active" role="tabpanel">
+
+      <nav class="left-nav" id="left-nav" aria-label="Section navigation">
+        <div class="left-nav-title">Jump to</div>
+        <a class="lnav-link" href="#sec-system" data-sec="sec-system"><span class="lnav-label">System</span></a>
+        <a class="lnav-link" href="#sec-php" data-sec="sec-php"><span class="lnav-label">PHP</span></a>
+        <a class="lnav-link" href="#sec-db" data-sec="sec-db"><span class="lnav-label">Databases</span></a>
+        <a class="lnav-link" href="#sec-lang" data-sec="sec-lang"><span class="lnav-label">Languages</span></a>
+        <a class="lnav-link" href="#sec-webserver" data-sec="sec-webserver"><span class="lnav-label">Web Server</span></a>
+        <a class="lnav-link" href="#sec-dbtool" data-sec="sec-dbtool"><span class="lnav-label">DB Tools</span></a>
+        <a class="lnav-link" href="#sec-editor" data-sec="sec-editor"><span class="lnav-label">Editors</span></a>
+        <a class="lnav-link" href="#sec-ide" data-sec="sec-ide"><span class="lnav-label">IDEs</span></a>
+        <a class="lnav-link" href="#sec-vcs" data-sec="sec-vcs"><span class="lnav-label">VCS</span></a>
+        <a class="lnav-link" href="#sec-browser" data-sec="sec-browser"><span class="lnav-label">Browsers</span></a>
+        <a class="lnav-link" href="#sec-container" data-sec="sec-container"><span class="lnav-label">Containers</span></a>
+        <a class="lnav-link" href="#sec-cloud" data-sec="sec-cloud"><span class="lnav-label">Cloud</span></a>
+        <a class="lnav-link" href="#sec-cli" data-sec="sec-cli"><span class="lnav-label">CLI Tools</span></a>
+        <a class="lnav-link" href="#sec-devtool" data-sec="sec-devtool"><span class="lnav-label">Dev Tools</span></a>
+        <a class="lnav-link" href="#sec-network" data-sec="sec-network"><span class="lnav-label">Networking</span></a>
+        <a class="lnav-link" href="#sec-security" data-sec="sec-security"><span class="lnav-label">Security</span></a>
+        <a class="lnav-link" href="#sec-ai" data-sec="sec-ai"><span class="lnav-label">AI / ML</span></a>
+        <a class="lnav-link" href="#sec-apps" data-sec="sec-apps"><span class="lnav-label">Apps</span></a>
+        <a class="lnav-link" href="#sec-media" data-sec="sec-media"><span class="lnav-label">Media</span></a>
+        <a class="lnav-link" href="#sec-fonts" data-sec="sec-fonts"><span class="lnav-label">Fonts</span></a>
+        <a class="lnav-link" href="#sec-gnome" data-sec="sec-gnome"><span class="lnav-label">GNOME</span></a>
+      </nav>
+
+      <main class="main-content" id="main-packages">
+
+        <div class="section" id="sec-system">
+          <div class="section-header">
+            <div class="section-icon" style="background:rgba(232,112,58,0.12)"></div>
+            <div><div class="section-title">System Update</div><div class="section-subtitle">Always recommended as first step</div></div>
+          </div>
+          <div class="options-grid">
+            <div class="option-card selected" id="sys-update-card" onclick="toggleSysCard('sys-update')">
+              <span class="check-box">✓</span><span class="option-label">apt update &amp; upgrade</span><span class="option-tag">recommended</span>
+            </div>
+            <div class="option-card selected" id="sys-deps-card" onclick="toggleSysCard('sys-deps')">
+              <span class="check-box">✓</span><span class="option-label">Base dependencies</span><span class="option-tag">curl, wget, git…</span>
+            </div>
+          </div>
         </div>
-        <div class="option-card selected" id="sys-deps-card" onclick="toggleSysCard('sys-deps')">
-          <span class="check-box">✓</span><span class="option-label">Base dependencies</span><span class="option-tag">curl, wget, git…</span>
+
+        <div class="section" id="sec-php">
+          <div class="section-header">
+            <div class="section-icon" style="background:rgba(129,140,248,0.12)"></div>
+            <div><div class="section-title">PHP</div><div class="section-subtitle">Choose versions and extensions</div></div>
+            <span class="section-count" id="php-count">0 selected</span>
+          </div>
+          <div class="php-grid">
+            <div class="php-card" data-value="8.1" onclick="togglePhpCard(this)"><div class="php-version">8.1</div><div class="php-sub">Legacy LTS</div></div>
+            <div class="php-card" data-value="8.2" onclick="togglePhpCard(this)"><div class="php-version">8.2</div><div class="php-sub">Stable</div></div>
+            <div class="php-card" data-value="8.3" onclick="togglePhpCard(this)"><div class="php-version">8.3</div><div class="php-sub">Current</div></div>
+            <div class="php-card" data-value="8.4" onclick="togglePhpCard(this)"><div class="php-version">8.4</div><div class="php-sub">Latest</div></div>
+            <div class="php-card" data-value="8.5" onclick="togglePhpCard(this)"><div class="php-version">8.5</div><div class="php-sub">Preview</div></div>
+          </div>
+          <div id="php-ext-section" style="display:none;margin-top:16px">
+            <div class="subsection-label">Extensions
+              <div class="ext-controls">
+                <button class="ctrl-btn" onclick="selectAllExt()">All</button>
+                <button class="ctrl-btn" onclick="selectCommonExt()">Common</button>
+                <button class="ctrl-btn" onclick="selectNoneExt()">None</button>
+              </div>
+            </div>
+            <div class="ext-pills" id="ext-pills"></div>
+          </div>
         </div>
-      </div>
-    </div>
 
-    <!-- PHP -->
-    <div class="section">
-      <div class="section-header">
-        <div class="section-icon" style="background:rgba(129,140,248,0.12)">🐘</div>
-        <div><div class="section-title">PHP</div></div>
-        <span class="section-count" id="php-count">0 selected</span>
-      </div>
-      <div class="php-grid">
-        <div class="php-card" data-value="8.1" onclick="togglePhpCard(this)"><div class="php-version">8.1</div><div class="php-sub">Legacy LTS</div></div>
-        <div class="php-card" data-value="8.2" onclick="togglePhpCard(this)"><div class="php-version">8.2</div><div class="php-sub">Stable</div></div>
-        <div class="php-card" data-value="8.3" onclick="togglePhpCard(this)"><div class="php-version">8.3</div><div class="php-sub">Current</div></div>
-        <div class="php-card" data-value="8.4" onclick="togglePhpCard(this)"><div class="php-version">8.4</div><div class="php-sub">Latest</div></div>
-        <div class="php-card" data-value="8.5" onclick="togglePhpCard(this)"><div class="php-version">8.5</div><div class="php-sub">Preview</div></div>
-      </div>
-      <div id="php-ext-section" style="display:none;margin-top:14px;">
-        <div style="color:var(--text-dim);font-size:11px;margin-bottom:8px;letter-spacing:0.04em;text-transform:uppercase;">Extensions</div>
-        <div class="section-controls">
-          <button class="ctrl-btn" onclick="selectAllExt()">All</button>
-          <button class="ctrl-btn" onclick="selectNoneExt()">None</button>
-          <button class="ctrl-btn" onclick="selectCommonExt()">Common</button>
+        <div class="section" id="sec-db">
+          <div class="section-header"><div class="section-icon" style="background:rgba(110,231,183,0.12)"></div><div><div class="section-title">Databases</div></div><span class="section-count" id="db-count">0 selected</span></div>
+          <div class="section-controls"><button class="ctrl-btn" onclick="toggleGroup('db','all')">All</button><button class="ctrl-btn" onclick="toggleGroup('db','none')">None</button></div>
+          <div class="options-grid" id="grid-db"></div>
         </div>
-        <div class="ext-grid">
-          <span class="ext-pill selected" data-ext="mysql">mysql</span>
-          <span class="ext-pill selected" data-ext="curl">curl</span>
-          <span class="ext-pill selected" data-ext="gd">gd</span>
-          <span class="ext-pill selected" data-ext="mbstring">mbstring</span>
-          <span class="ext-pill selected" data-ext="xml">xml</span>
-          <span class="ext-pill selected" data-ext="zip">zip</span>
-          <span class="ext-pill selected" data-ext="intl">intl</span>
-          <span class="ext-pill" data-ext="bcmath">bcmath</span>
-          <span class="ext-pill" data-ext="imagick">imagick</span>
-          <span class="ext-pill" data-ext="redis">redis</span>
-          <span class="ext-pill" data-ext="xdebug">xdebug</span>
-          <span class="ext-pill" data-ext="pgsql">pgsql</span>
-          <span class="ext-pill" data-ext="sqlite3">sqlite3</span>
-          <span class="ext-pill" data-ext="soap">soap</span>
-          <span class="ext-pill" data-ext="ldap">ldap</span>
-          <span class="ext-pill" data-ext="imap">imap</span>
-          <span class="ext-pill" data-ext="fpm">fpm</span>
-          <span class="ext-pill" data-ext="mongodb">mongodb</span>
-          <span class="ext-pill" data-ext="amqp">amqp</span>
-          <span class="ext-pill" data-ext="igbinary">igbinary</span>
-          <span class="ext-pill" data-ext="msgpack">msgpack</span>
-          <span class="ext-pill" data-ext="pcov">pcov</span>
-          <span class="ext-pill" data-ext="ast">ast</span>
-          <span class="ext-pill" data-ext="uuid">uuid</span>
+
+        <div class="section" id="sec-lang">
+          <div class="section-header"><div class="section-icon" style="background:rgba(251,191,36,0.12)"></div><div><div class="section-title">Languages &amp; Runtimes</div></div><span class="section-count" id="lang-count">0 selected</span></div>
+          <div class="section-controls"><button class="ctrl-btn" onclick="toggleGroup('lang','all')">All</button><button class="ctrl-btn" onclick="toggleGroup('lang','none')">None</button></div>
+          <div class="options-grid" id="grid-lang"></div>
         </div>
-      </div>
-    </div>
 
-    <!-- DATABASES -->
-    <div class="section">
-      <div class="section-header">
-        <div class="section-icon" style="background:rgba(251,191,36,0.12)">🗄️</div>
-        <div><div class="section-title">Databases</div></div>
-        <span class="section-count" id="db-count">0 selected</span>
-      </div>
-      <div class="section-controls">
-        <button class="ctrl-btn" onclick="toggleGroup('db','all')">All</button>
-        <button class="ctrl-btn" onclick="toggleGroup('db','none')">None</button>
-      </div>
-      <div class="options-grid">
-        <div class="option-card" data-group="db" data-value="MariaDB" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">MariaDB</span></div>
-        <div class="option-card" data-group="db" data-value="MySQL" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">MySQL</span></div>
-        <div class="option-card" data-group="db" data-value="PostgreSQL" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">PostgreSQL</span></div>
-        <div class="option-card" data-group="db" data-value="SQLite3" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">SQLite3</span></div>
-        <div class="option-card" data-group="db" data-value="Redis" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Redis</span></div>
-        <div class="option-card" data-group="db" data-value="MongoDB" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">MongoDB</span></div>
-        <div class="option-card" data-group="db" data-value="Cassandra" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Cassandra</span></div>
-        <div class="option-card" data-group="db" data-value="CouchDB" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">CouchDB</span></div>
-        <div class="option-card" data-group="db" data-value="InfluxDB" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">InfluxDB</span><span class="option-tag">time-series</span></div>
-        <div class="option-card" data-group="db" data-value="Neo4j" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Neo4j</span><span class="option-tag">graph</span></div>
-        <div class="option-card" data-group="db" data-value="Elasticsearch" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Elasticsearch</span><span class="option-tag">search</span></div>
-        <div class="option-card" data-group="db" data-value="Memcached" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Memcached</span></div>
-        <div class="option-card" data-group="db" data-value="RabbitMQ" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">RabbitMQ</span><span class="option-tag">message queue</span></div>
-        <div class="option-card" data-group="db" data-value="Apache Kafka" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Apache Kafka</span><span class="option-tag">streaming</span></div>
-        <div class="option-card" data-group="db" data-value="MinIO" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">MinIO</span><span class="option-tag">s3-compatible</span></div>
-        <div class="option-card" data-group="db" data-value="Valkey" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Valkey</span><span class="option-tag">redis-fork</span></div>
-      </div>
-    </div>
+        <div class="section" id="sec-webserver">
+          <div class="section-header"><div class="section-icon" style="background:rgba(232,112,58,0.12)"></div><div><div class="section-title">Web Server</div><div class="section-subtitle">Single selection</div></div></div>
+          <div class="options-grid" id="grid-webserver"></div>
+        </div>
 
-    <!-- LANGUAGES -->
-    <div class="section">
-      <div class="section-header">
-        <div class="section-icon" style="background:rgba(110,231,183,0.12)">⌨️</div>
-        <div><div class="section-title">Programming Languages</div></div>
-        <span class="section-count" id="lang-count">0 selected</span>
-      </div>
-      <div class="section-controls">
-        <button class="ctrl-btn" onclick="toggleGroup('lang','all')">All</button>
-        <button class="ctrl-btn" onclick="toggleGroup('lang','none')">None</button>
-      </div>
-      <div class="options-grid">
-        <div class="option-card" data-group="lang" data-value="Node.js (LTS via NVM)" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Node.js LTS</span><span class="option-tag">nvm</span></div>
-        <div class="option-card" data-group="lang" data-value="Bun" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Bun</span><span class="option-tag">js runtime</span></div>
-        <div class="option-card" data-group="lang" data-value="Deno" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Deno</span><span class="option-tag">js runtime</span></div>
-        <div class="option-card" data-group="lang" data-value="TypeScript" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">TypeScript</span><span class="option-tag">npm</span></div>
-        <div class="option-card" data-group="lang" data-value="Python 3 + pip" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Python 3 + pip</span></div>
-        <div class="option-card" data-group="lang" data-value="Python (pyenv)" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Python (pyenv)</span><span class="option-tag">version mgr</span></div>
-        <div class="option-card" data-group="lang" data-value="Go" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Go</span></div>
-        <div class="option-card" data-group="lang" data-value="Rust" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Rust</span><span class="option-tag">rustup</span></div>
-        <div class="option-card" data-group="lang" data-value="Ruby" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Ruby</span></div>
-        <div class="option-card" data-group="lang" data-value="Ruby (rbenv)" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Ruby (rbenv)</span><span class="option-tag">version mgr</span></div>
-        <div class="option-card" data-group="lang" data-value="Java (OpenJDK 21)" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Java 21</span><span class="option-tag">LTS</span></div>
-        <div class="option-card" data-group="lang" data-value="Java (OpenJDK 17)" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Java 17</span><span class="option-tag">LTS</span></div>
-        <div class="option-card" data-group="lang" data-value="Java (OpenJDK 11)" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Java 11</span><span class="option-tag">LTS</span></div>
-        <div class="option-card" data-group="lang" data-value="Kotlin" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Kotlin</span></div>
-        <div class="option-card" data-group="lang" data-value="Scala" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Scala</span></div>
-        <div class="option-card" data-group="lang" data-value="Groovy" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Groovy</span><span class="option-tag">JVM</span></div>
-        <div class="option-card" data-group="lang" data-value="Clojure" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Clojure</span><span class="option-tag">JVM</span></div>
-        <div class="option-card" data-group="lang" data-value=".NET SDK" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">.NET SDK</span></div>
-        <div class="option-card" data-group="lang" data-value="C / C++" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">C / C++</span><span class="option-tag">gcc+cmake</span></div>
-        <div class="option-card" data-group="lang" data-value="LLVM / Clang" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">LLVM / Clang</span></div>
-        <div class="option-card" data-group="lang" data-value="Lua" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Lua</span></div>
-        <div class="option-card" data-group="lang" data-value="Perl" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Perl</span></div>
-        <div class="option-card" data-group="lang" data-value="R" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">R</span></div>
-        <div class="option-card" data-group="lang" data-value="Julia" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Julia</span></div>
-        <div class="option-card" data-group="lang" data-value="Swift" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Swift</span></div>
-        <div class="option-card" data-group="lang" data-value="Dart" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Dart</span></div>
-        <div class="option-card" data-group="lang" data-value="Flutter" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Flutter</span><span class="option-tag">dart</span></div>
-        <div class="option-card" data-group="lang" data-value="Elixir" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Elixir</span></div>
-        <div class="option-card" data-group="lang" data-value="Erlang" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Erlang</span></div>
-        <div class="option-card" data-group="lang" data-value="Haskell" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Haskell</span><span class="option-tag">ghcup</span></div>
-        <div class="option-card" data-group="lang" data-value="OCaml" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">OCaml</span></div>
-        <div class="option-card" data-group="lang" data-value="Zig" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Zig</span></div>
-        <div class="option-card" data-group="lang" data-value="Nim" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Nim</span></div>
-        <div class="option-card" data-group="lang" data-value="Crystal" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Crystal</span></div>
-        <div class="option-card" data-group="lang" data-value="V Lang" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">V Lang</span></div>
-        <div class="option-card" data-group="lang" data-value="Tcl/Tk" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Tcl/Tk</span></div>
-        <div class="option-card" data-group="lang" data-value="Fortran" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Fortran</span><span class="option-tag">gfortran</span></div>
-        <div class="option-card" data-group="lang" data-value="COBOL" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">COBOL</span></div>
-        <div class="option-card" data-group="lang" data-value="Assembly (NASM)" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Assembly</span><span class="option-tag">nasm</span></div>
-        <div class="option-card" data-group="lang" data-value="Prolog (SWI)" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Prolog</span><span class="option-tag">swi</span></div>
-        <div class="option-card" data-group="lang" data-value="Racket" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Racket</span><span class="option-tag">lisp/scheme</span></div>
-      </div>
-    </div>
+        <div class="section" id="sec-dbtool">
+          <div class="section-header"><div class="section-icon" style="background:rgba(110,231,183,0.12)"></div><div><div class="section-title">Database Tools</div></div><span class="section-count" id="dbtool-count">0 selected</span></div>
+          <div class="section-controls"><button class="ctrl-btn" onclick="toggleGroup('dbtool','all')">All</button><button class="ctrl-btn" onclick="toggleGroup('dbtool','none')">None</button></div>
+          <div class="options-grid" id="grid-dbtool"></div>
+        </div>
 
-    <!-- WEB SERVER -->
-    <div class="section">
-      <div class="section-header">
-        <div class="section-icon" style="background:rgba(232,112,58,0.12)">🌐</div>
-        <div><div class="section-title">Web Server</div></div>
-      </div>
-      <div class="radio-grid">
-        <div class="radio-card" data-value="Apache2" onclick="selectWebserver(this)"><span class="radio-dot"></span><span class="radio-label">Apache2</span></div>
-        <div class="radio-card" data-value="Nginx" onclick="selectWebserver(this)"><span class="radio-dot"></span><span class="radio-label">Nginx</span></div>
-        <div class="radio-card" data-value="Caddy" onclick="selectWebserver(this)"><span class="radio-dot"></span><span class="radio-label">Caddy</span></div>
-        <div class="radio-card" data-value="Traefik" onclick="selectWebserver(this)"><span class="radio-dot"></span><span class="radio-label">Traefik</span><span class="option-tag">proxy</span></div>
-        <div class="radio-card selected" data-value="None" onclick="selectWebserver(this)"><span class="radio-dot"></span><span class="radio-label">None</span></div>
-      </div>
-    </div>
+        <div class="section" id="sec-editor">
+          <div class="section-header"><div class="section-icon" style="background:rgba(129,140,248,0.12)"></div><div><div class="section-title">Editors</div></div><span class="section-count" id="editor-count">0 selected</span></div>
+          <div class="section-controls"><button class="ctrl-btn" onclick="toggleGroup('editor','all')">All</button><button class="ctrl-btn" onclick="toggleGroup('editor','none')">None</button></div>
+          <div class="options-grid" id="grid-editor"></div>
+        </div>
 
-    <!-- DB TOOLS -->
-    <div class="section">
-      <div class="section-header">
-        <div class="section-icon" style="background:rgba(251,191,36,0.12)">🔧</div>
-        <div><div class="section-title">DB Management Tools</div></div>
-        <span class="section-count" id="dbtool-count">0 selected</span>
-      </div>
-      <div class="options-grid">
-        <div class="option-card" data-group="dbtool" data-value="phpMyAdmin" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">phpMyAdmin</span></div>
-        <div class="option-card" data-group="dbtool" data-value="Adminer" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Adminer</span></div>
-        <div class="option-card" data-group="dbtool" data-value="DBeaver CE" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">DBeaver CE</span></div>
-        <div class="option-card" data-group="dbtool" data-value="TablePlus" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">TablePlus</span><span class="option-tag">snap</span></div>
-        <div class="option-card" data-group="dbtool" data-value="DataGrip" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">DataGrip</span><span class="option-tag">JetBrains</span></div>
-        <div class="option-card" data-group="dbtool" data-value="pgAdmin 4" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">pgAdmin 4</span><span class="option-tag">postgres</span></div>
-        <div class="option-card" data-group="dbtool" data-value="MongoDB Compass" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">MongoDB Compass</span></div>
-        <div class="option-card" data-group="dbtool" data-value="Redis Insight" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Redis Insight</span></div>
-        <div class="option-card" data-group="dbtool" data-value="MySQL Workbench" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">MySQL Workbench</span></div>
-        <div class="option-card" data-group="dbtool" data-value="Beekeeper Studio" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Beekeeper Studio</span></div>
-      </div>
-    </div>
+        <div class="section" id="sec-ide">
+          <div class="section-header"><div class="section-icon" style="background:rgba(232,112,58,0.12)"></div><div><div class="section-title">IDEs</div></div><span class="section-count" id="ide-count">0 selected</span></div>
+          <div class="section-controls"><button class="ctrl-btn" onclick="toggleGroup('ide','all')">All</button><button class="ctrl-btn" onclick="toggleGroup('ide','none')">None</button></div>
+          <div class="options-grid" id="grid-ide"></div>
+        </div>
 
-    <!-- EDITORS -->
-    <div class="section">
-      <div class="section-header">
-        <div class="section-icon" style="background:rgba(129,140,248,0.12)">✏️</div>
-        <div><div class="section-title">Code Editors</div></div>
-        <span class="section-count" id="editor-count">0 selected</span>
-      </div>
-      <div class="section-controls">
-        <button class="ctrl-btn" onclick="toggleGroup('editor','all')">All</button>
-        <button class="ctrl-btn" onclick="toggleGroup('editor','none')">None</button>
-      </div>
-      <div class="options-grid">
-        <div class="option-card" data-group="editor" data-value="VS Code" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">VS Code</span></div>
-        <div class="option-card" data-group="editor" data-value="VS Codium" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">VS Codium</span><span class="option-tag">FOSS</span></div>
-        <div class="option-card" data-group="editor" data-value="Zed Editor" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Zed Editor</span></div>
-        <div class="option-card" data-group="editor" data-value="Cursor" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Cursor AI</span><span class="option-tag">appimage</span></div>
-        <div class="option-card" data-group="editor" data-value="Windsurf" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Windsurf</span><span class="option-tag">AI editor</span></div>
-        <div class="option-card" data-group="editor" data-value="Sublime Text" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Sublime Text</span></div>
-        <div class="option-card" data-group="editor" data-value="Vim" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Vim</span></div>
-        <div class="option-card" data-group="editor" data-value="Neovim" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Neovim</span></div>
-        <div class="option-card" data-group="editor" data-value="Emacs" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Emacs</span></div>
-        <div class="option-card" data-group="editor" data-value="Helix" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Helix</span><span class="option-tag">modal</span></div>
-        <div class="option-card" data-group="editor" data-value="Lapce" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Lapce</span><span class="option-tag">rust-based</span></div>
-        <div class="option-card" data-group="editor" data-value="Kate" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Kate</span><span class="option-tag">KDE</span></div>
-        <div class="option-card" data-group="editor" data-value="Geany" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Geany</span><span class="option-tag">lightweight</span></div>
-        <div class="option-card" data-group="editor" data-value="Nano" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Nano</span></div>
-      </div>
-    </div>
+        <div class="section" id="sec-vcs">
+          <div class="section-header"><div class="section-icon" style="background:rgba(110,231,183,0.12)"></div><div><div class="section-title">Version Control</div></div><span class="section-count" id="vcs-count">0 selected</span></div>
+          <div class="section-controls"><button class="ctrl-btn" onclick="toggleGroup('vcs','all')">All</button><button class="ctrl-btn" onclick="toggleGroup('vcs','none')">None</button></div>
+          <div class="options-grid" id="grid-vcs"></div>
+        </div>
 
-    <!-- IDEs -->
-    <div class="section">
-      <div class="section-header">
-        <div class="section-icon" style="background:rgba(129,140,248,0.12)">🧠</div>
-        <div><div class="section-title">IDEs</div></div>
-        <span class="section-count" id="ide-count">0 selected</span>
-      </div>
-      <div class="section-controls">
-        <button class="ctrl-btn" onclick="toggleGroup('ide','all')">All</button>
-        <button class="ctrl-btn" onclick="toggleGroup('ide','none')">None</button>
-      </div>
-      <div class="options-grid">
-        <div class="option-card" data-group="ide" data-value="IntelliJ IDEA CE" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">IntelliJ IDEA CE</span></div>
-        <div class="option-card" data-group="ide" data-value="IntelliJ IDEA Ultimate" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">IntelliJ Ultimate</span></div>
-        <div class="option-card" data-group="ide" data-value="PhpStorm" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">PhpStorm</span></div>
-        <div class="option-card" data-group="ide" data-value="PyCharm CE" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">PyCharm CE</span></div>
-        <div class="option-card" data-group="ide" data-value="PyCharm Pro" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">PyCharm Pro</span></div>
-        <div class="option-card" data-group="ide" data-value="WebStorm" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">WebStorm</span></div>
-        <div class="option-card" data-group="ide" data-value="GoLand" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">GoLand</span></div>
-        <div class="option-card" data-group="ide" data-value="RubyMine" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">RubyMine</span></div>
-        <div class="option-card" data-group="ide" data-value="CLion" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">CLion</span></div>
-        <div class="option-card" data-group="ide" data-value="Rider" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Rider</span><span class="option-tag">.NET</span></div>
-        <div class="option-card" data-group="ide" data-value="DataSpell" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">DataSpell</span></div>
-        <div class="option-card" data-group="ide" data-value="Fleet" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Fleet</span><span class="option-tag">JetBrains</span></div>
-        <div class="option-card" data-group="ide" data-value="Android Studio" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Android Studio</span></div>
-        <div class="option-card" data-group="ide" data-value="Eclipse" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Eclipse</span></div>
-        <div class="option-card" data-group="ide" data-value="NetBeans" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">NetBeans</span></div>
-        <div class="option-card" data-group="ide" data-value="Code::Blocks" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Code::Blocks</span><span class="option-tag">C/C++</span></div>
-        <div class="option-card" data-group="ide" data-value="Arduino IDE" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Arduino IDE</span></div>
-      </div>
-    </div>
+        <div class="section" id="sec-browser">
+          <div class="section-header"><div class="section-icon" style="background:rgba(251,191,36,0.12)"></div><div><div class="section-title">Browsers</div></div><span class="section-count" id="browser-count">0 selected</span></div>
+          <div class="section-controls"><button class="ctrl-btn" onclick="toggleGroup('browser','all')">All</button><button class="ctrl-btn" onclick="toggleGroup('browser','none')">None</button></div>
+          <div class="options-grid" id="grid-browser"></div>
+        </div>
 
-    <!-- VCS -->
-    <div class="section">
-      <div class="section-header">
-        <div class="section-icon" style="background:rgba(110,231,183,0.12)">🌿</div>
-        <div><div class="section-title">Version Control</div></div>
-        <span class="section-count" id="vcs-count">0 selected</span>
-      </div>
-      <div class="options-grid">
-        <div class="option-card" data-group="vcs" data-value="Sourcegit (GUI)" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Sourcegit</span><span class="option-tag">gui</span></div>
-        <div class="option-card" data-group="vcs" data-value="GitKraken" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">GitKraken</span><span class="option-tag">snap</span></div>
-        <div class="option-card" data-group="vcs" data-value="GitHub CLI" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">GitHub CLI</span></div>
-        <div class="option-card" data-group="vcs" data-value="GitLab CLI" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">GitLab CLI</span></div>
-        <div class="option-card" data-group="vcs" data-value="Git LFS" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Git LFS</span></div>
-        <div class="option-card" data-group="vcs" data-value="lazygit" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">lazygit</span><span class="option-tag">tui</span></div>
-        <div class="option-card" data-group="vcs" data-value="Meld" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Meld</span><span class="option-tag">diff</span></div>
-        <div class="option-card" data-group="vcs" data-value="delta" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">delta</span><span class="option-tag">git diff</span></div>
-        <div class="option-card" data-group="vcs" data-value="pre-commit" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">pre-commit</span></div>
-        <div class="option-card" data-group="vcs" data-value="SVN" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">SVN</span></div>
-      </div>
-    </div>
+        <div class="section" id="sec-container">
+          <div class="section-header"><div class="section-icon" style="background:rgba(129,140,248,0.12)"></div><div><div class="section-title">Containers &amp; Kubernetes</div></div><span class="section-count" id="container-count">0 selected</span></div>
+          <div class="section-controls"><button class="ctrl-btn" onclick="toggleGroup('container','all')">All</button><button class="ctrl-btn" onclick="toggleGroup('container','none')">None</button></div>
+          <div class="options-grid" id="grid-container"></div>
+        </div>
 
-    <!-- BROWSERS -->
-    <div class="section">
-      <div class="section-header">
-        <div class="section-icon" style="background:rgba(251,191,36,0.12)">🌍</div>
-        <div><div class="section-title">Browsers</div></div>
-        <span class="section-count" id="browser-count">0 selected</span>
-      </div>
-      <div class="options-grid">
-        <div class="option-card" data-group="browser" data-value="Google Chrome" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Google Chrome</span></div>
-        <div class="option-card" data-group="browser" data-value="Firefox" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Firefox</span></div>
-        <div class="option-card" data-group="browser" data-value="Brave" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Brave</span></div>
-        <div class="option-card" data-group="browser" data-value="Chromium" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Chromium</span><span class="option-tag">snap</span></div>
-        <div class="option-card" data-group="browser" data-value="Microsoft Edge" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Microsoft Edge</span></div>
-        <div class="option-card" data-group="browser" data-value="Vivaldi" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Vivaldi</span></div>
-        <div class="option-card" data-group="browser" data-value="Opera" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Opera</span><span class="option-tag">snap</span></div>
-        <div class="option-card" data-group="browser" data-value="Tor Browser" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Tor Browser</span><span class="option-tag">privacy</span></div>
-        <div class="option-card" data-group="browser" data-value="Min Browser" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Min</span><span class="option-tag">minimal</span></div>
-        <div class="option-card" data-group="browser" data-value="Lynx" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Lynx</span><span class="option-tag">terminal</span></div>
-        <div class="option-card" data-group="browser" data-value="w3m" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">w3m</span><span class="option-tag">terminal</span></div>
-      </div>
-    </div>
+        <div class="section" id="sec-cloud">
+          <div class="section-header"><div class="section-icon" style="background:rgba(110,231,183,0.12)"></div><div><div class="section-title">Cloud &amp; IaC</div></div><span class="section-count" id="cloud-count">0 selected</span></div>
+          <div class="section-controls"><button class="ctrl-btn" onclick="toggleGroup('cloud','all')">All</button><button class="ctrl-btn" onclick="toggleGroup('cloud','none')">None</button></div>
+          <div class="options-grid" id="grid-cloud"></div>
+        </div>
 
-    <!-- CONTAINERS -->
-    <div class="section">
-      <div class="section-header">
-        <div class="section-icon" style="background:rgba(129,140,248,0.12)">🐳</div>
-        <div><div class="section-title">Containers &amp; Kubernetes</div></div>
-        <span class="section-count" id="container-count">0 selected</span>
-      </div>
-      <div class="section-controls">
-        <button class="ctrl-btn" onclick="toggleGroup('container','all')">All</button>
-        <button class="ctrl-btn" onclick="toggleGroup('container','none')">None</button>
-      </div>
-      <div class="options-grid">
-        <div class="option-card" data-group="container" data-value="Docker Engine" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Docker Engine</span></div>
-        <div class="option-card" data-group="container" data-value="Docker Compose v2" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Docker Compose v2</span></div>
-        <div class="option-card" data-group="container" data-value="Portainer CE" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Portainer CE</span><span class="option-tag">ui</span></div>
-        <div class="option-card" data-group="container" data-value="Podman" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Podman</span><span class="option-tag">daemonless</span></div>
-        <div class="option-card" data-group="container" data-value="kubectl" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">kubectl</span></div>
-        <div class="option-card" data-group="container" data-value="Helm" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Helm</span></div>
-        <div class="option-card" data-group="container" data-value="Minikube" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Minikube</span><span class="option-tag">local k8s</span></div>
-        <div class="option-card" data-group="container" data-value="Kind" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Kind</span><span class="option-tag">k8s in docker</span></div>
-        <div class="option-card" data-group="container" data-value="k9s" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">k9s</span><span class="option-tag">tui</span></div>
-        <div class="option-card" data-group="container" data-value="Buildah" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Buildah</span></div>
-        <div class="option-card" data-group="container" data-value="Skopeo" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Skopeo</span></div>
-        <div class="option-card" data-group="container" data-value="Hadolint" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Hadolint</span><span class="option-tag">linter</span></div>
-        <div class="option-card" data-group="container" data-value="ctop" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">ctop</span></div>
-        <div class="option-card" data-group="container" data-value="Dive" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Dive</span><span class="option-tag">image explorer</span></div>
-      </div>
-    </div>
+        <div class="section" id="sec-cli">
+          <div class="section-header"><div class="section-icon" style="background:rgba(232,112,58,0.12)"></div><div><div class="section-title">CLI Tools &amp; Shell</div></div><span class="section-count" id="cli-count">0 selected</span></div>
+          <div class="section-controls"><button class="ctrl-btn" onclick="toggleGroup('cli','all')">All</button><button class="ctrl-btn" onclick="toggleGroup('cli','none')">None</button></div>
+          <div class="options-grid" id="grid-cli"></div>
+        </div>
 
-    <!-- CLOUD & IaC -->
-    <div class="section">
-      <div class="section-header">
-        <div class="section-icon" style="background:rgba(110,231,183,0.12)">☁️</div>
-        <div><div class="section-title">Cloud &amp; IaC</div></div>
-        <span class="section-count" id="cloud-count">0 selected</span>
-      </div>
-      <div class="section-controls">
-        <button class="ctrl-btn" onclick="toggleGroup('cloud','all')">All</button>
-        <button class="ctrl-btn" onclick="toggleGroup('cloud','none')">None</button>
-      </div>
-      <div class="options-grid">
-        <div class="option-card" data-group="cloud" data-value="AWS CLI v2" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">AWS CLI</span></div>
-        <div class="option-card" data-group="cloud" data-value="Azure CLI" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Azure CLI</span></div>
-        <div class="option-card" data-group="cloud" data-value="Google Cloud CLI" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">GCloud CLI</span></div>
-        <div class="option-card" data-group="cloud" data-value="Terraform" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Terraform</span></div>
-        <div class="option-card" data-group="cloud" data-value="OpenTofu" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">OpenTofu</span><span class="option-tag">TF fork</span></div>
-        <div class="option-card" data-group="cloud" data-value="Packer" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Packer</span></div>
-        <div class="option-card" data-group="cloud" data-value="Vault" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Vault</span></div>
-        <div class="option-card" data-group="cloud" data-value="Consul" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Consul</span></div>
-        <div class="option-card" data-group="cloud" data-value="Nomad" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Nomad</span></div>
-        <div class="option-card" data-group="cloud" data-value="Pulumi" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Pulumi</span></div>
-        <div class="option-card" data-group="cloud" data-value="Ansible" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Ansible</span></div>
-        <div class="option-card" data-group="cloud" data-value="Vagrant" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Vagrant</span></div>
-        <div class="option-card" data-group="cloud" data-value="Serverless Framework" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Serverless</span></div>
-        <div class="option-card" data-group="cloud" data-value="Flux CD" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Flux CD</span><span class="option-tag">GitOps</span></div>
-        <div class="option-card" data-group="cloud" data-value="ArgoCD CLI" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">ArgoCD CLI</span></div>
-      </div>
-    </div>
+        <div class="section" id="sec-devtool">
+          <div class="section-header"><div class="section-icon" style="background:rgba(251,191,36,0.12)"></div><div><div class="section-title">Dev Tools &amp; Build</div></div><span class="section-count" id="devtool-count">0 selected</span></div>
+          <div class="section-controls"><button class="ctrl-btn" onclick="toggleGroup('devtool','all')">All</button><button class="ctrl-btn" onclick="toggleGroup('devtool','none')">None</button></div>
+          <div class="options-grid" id="grid-devtool"></div>
+        </div>
 
-    <!-- CLI TOOLS -->
-    <div class="section">
-      <div class="section-header">
-        <div class="section-icon" style="background:rgba(110,231,183,0.12)">🖥️</div>
-        <div><div class="section-title">CLI Tools &amp; Shell</div></div>
-        <span class="section-count" id="cli-count">0 selected</span>
-      </div>
-      <div class="section-controls">
-        <button class="ctrl-btn" onclick="toggleGroup('cli','all')">All</button>
-        <button class="ctrl-btn" onclick="toggleGroup('cli','none')">None</button>
-      </div>
-      <div class="options-grid">
-        <div class="option-card" data-group="cli" data-value="zsh + Oh My Zsh" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">zsh + Oh My Zsh</span></div>
-        <div class="option-card" data-group="cli" data-value="fish shell" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Fish Shell</span></div>
-        <div class="option-card" data-group="cli" data-value="Starship prompt" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Starship</span><span class="option-tag">prompt</span></div>
-        <div class="option-card" data-group="cli" data-value="tmux" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">tmux</span></div>
-        <div class="option-card" data-group="cli" data-value="Zellij" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Zellij</span><span class="option-tag">multiplexer</span></div>
-        <div class="option-card" data-group="cli" data-value="screen" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">screen</span></div>
-        <div class="option-card" data-group="cli" data-value="Terminator" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Terminator</span><span class="option-tag">terminal</span></div>
-        <div class="option-card" data-group="cli" data-value="Alacritty" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Alacritty</span><span class="option-tag">terminal</span></div>
-        <div class="option-card" data-group="cli" data-value="Kitty" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Kitty</span><span class="option-tag">terminal</span></div>
-        <div class="option-card" data-group="cli" data-value="WezTerm" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">WezTerm</span><span class="option-tag">terminal</span></div>
-        <div class="option-card" data-group="cli" data-value="bat" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">bat</span><span class="option-tag">better cat</span></div>
-        <div class="option-card" data-group="cli" data-value="eza" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">eza</span><span class="option-tag">better ls</span></div>
-        <div class="option-card" data-group="cli" data-value="lsd" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">lsd</span><span class="option-tag">better ls</span></div>
-        <div class="option-card" data-group="cli" data-value="fzf" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">fzf</span><span class="option-tag">fuzzy find</span></div>
-        <div class="option-card" data-group="cli" data-value="ripgrep" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">ripgrep</span><span class="option-tag">fast grep</span></div>
-        <div class="option-card" data-group="cli" data-value="fd" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">fd</span><span class="option-tag">fast find</span></div>
-        <div class="option-card" data-group="cli" data-value="jq" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">jq</span><span class="option-tag">JSON</span></div>
-        <div class="option-card" data-group="cli" data-value="yq" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">yq</span><span class="option-tag">YAML</span></div>
-        <div class="option-card" data-group="cli" data-value="httpie" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">HTTPie</span></div>
-        <div class="option-card" data-group="cli" data-value="curlie" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">curlie</span><span class="option-tag">curl+httpie</span></div>
-        <div class="option-card" data-group="cli" data-value="htop / btop" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">htop / btop</span></div>
-        <div class="option-card" data-group="cli" data-value="glances" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Glances</span></div>
-        <div class="option-card" data-group="cli" data-value="neofetch" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Neofetch</span></div>
-        <div class="option-card" data-group="cli" data-value="fastfetch" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Fastfetch</span></div>
-        <div class="option-card" data-group="cli" data-value="zoxide" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">zoxide</span><span class="option-tag">smart cd</span></div>
-        <div class="option-card" data-group="cli" data-value="tldr" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">tldr</span></div>
-        <div class="option-card" data-group="cli" data-value="thefuck" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">thefuck</span></div>
-        <div class="option-card" data-group="cli" data-value="dust" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">dust</span><span class="option-tag">better du</span></div>
-        <div class="option-card" data-group="cli" data-value="duf" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">duf</span><span class="option-tag">better df</span></div>
-        <div class="option-card" data-group="cli" data-value="ncdu" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">ncdu</span><span class="option-tag">disk usage</span></div>
-        <div class="option-card" data-group="cli" data-value="hyperfine" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">hyperfine</span><span class="option-tag">benchmark</span></div>
-        <div class="option-card" data-group="cli" data-value="ranger" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">ranger</span><span class="option-tag">file manager</span></div>
-        <div class="option-card" data-group="cli" data-value="nnn" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">nnn</span><span class="option-tag">file manager</span></div>
-        <div class="option-card" data-group="cli" data-value="mc" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Midnight Cmdr</span><span class="option-tag">file manager</span></div>
-        <div class="option-card" data-group="cli" data-value="rclone" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">rclone</span><span class="option-tag">cloud sync</span></div>
-        <div class="option-card" data-group="cli" data-value="rsync" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">rsync</span></div>
-        <div class="option-card" data-group="cli" data-value="pv" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">pv</span><span class="option-tag">pipe viewer</span></div>
-        <div class="option-card" data-group="cli" data-value="tree" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">tree</span></div>
-        <div class="option-card" data-group="cli" data-value="parallel" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">GNU Parallel</span></div>
-        <div class="option-card" data-group="cli" data-value="Composer (PHP)" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Composer</span><span class="option-tag">php</span></div>
-        <div class="option-card" data-group="cli" data-value="pnpm + yarn" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">pnpm + yarn</span></div>
-      </div>
-    </div>
+        <div class="section" id="sec-network">
+          <div class="section-header"><div class="section-icon" style="background:rgba(110,231,183,0.12)"></div><div><div class="section-title">Networking</div></div><span class="section-count" id="network-count">0 selected</span></div>
+          <div class="section-controls"><button class="ctrl-btn" onclick="toggleGroup('network','all')">All</button><button class="ctrl-btn" onclick="toggleGroup('network','none')">None</button></div>
+          <div class="options-grid" id="grid-network"></div>
+        </div>
 
-    <!-- DEV TOOLS -->
-    <div class="section">
-      <div class="section-header">
-        <div class="section-icon" style="background:rgba(251,191,36,0.12)">🛠️</div>
-        <div><div class="section-title">Dev Tools &amp; Build</div></div>
-        <span class="section-count" id="devtool-count">0 selected</span>
-      </div>
-      <div class="section-controls">
-        <button class="ctrl-btn" onclick="toggleGroup('devtool','all')">All</button>
-        <button class="ctrl-btn" onclick="toggleGroup('devtool','none')">None</button>
-      </div>
-      <div class="options-grid">
-        <div class="option-card" data-group="devtool" data-value="make" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">make / cmake</span></div>
-        <div class="option-card" data-group="devtool" data-value="gcc extras" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">GCC Extras</span></div>
-        <div class="option-card" data-group="devtool" data-value="Meson + Ninja" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Meson + Ninja</span></div>
-        <div class="option-card" data-group="devtool" data-value="Bazel" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Bazel</span></div>
-        <div class="option-card" data-group="devtool" data-value="Maven" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Maven</span></div>
-        <div class="option-card" data-group="devtool" data-value="Gradle" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Gradle</span></div>
-        <div class="option-card" data-group="devtool" data-value="Postman" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Postman</span></div>
-        <div class="option-card" data-group="devtool" data-value="Insomnia" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Insomnia</span><span class="option-tag">API client</span></div>
-        <div class="option-card" data-group="devtool" data-value="Bruno" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Bruno</span><span class="option-tag">API client</span></div>
-        <div class="option-card" data-group="devtool" data-value="ngrok" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">ngrok</span><span class="option-tag">tunnel</span></div>
-        <div class="option-card" data-group="devtool" data-value="act" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">act</span><span class="option-tag">local CI</span></div>
-        <div class="option-card" data-group="devtool" data-value="gdb" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">GDB</span><span class="option-tag">debugger</span></div>
-        <div class="option-card" data-group="devtool" data-value="valgrind" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Valgrind</span></div>
-        <div class="option-card" data-group="devtool" data-value="strace" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">strace</span></div>
-        <div class="option-card" data-group="devtool" data-value="perf" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">perf</span><span class="option-tag">profiling</span></div>
-        <div class="option-card" data-group="devtool" data-value="Mermaid CLI" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Mermaid CLI</span></div>
-        <div class="option-card" data-group="devtool" data-value="Pandoc" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Pandoc</span></div>
-        <div class="option-card" data-group="devtool" data-value="LaTeX (texlive)" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">LaTeX</span></div>
-        <div class="option-card" data-group="devtool" data-value="ImageMagick" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">ImageMagick</span></div>
-        <div class="option-card" data-group="devtool" data-value="ffmpeg" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">FFmpeg</span></div>
-        <div class="option-card" data-group="devtool" data-value="Prettier" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Prettier</span></div>
-        <div class="option-card" data-group="devtool" data-value="ESLint" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">ESLint</span></div>
-        <div class="option-card" data-group="devtool" data-value="Trivy" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Trivy</span><span class="option-tag">vuln scanner</span></div>
-        <div class="option-card" data-group="devtool" data-value="Doxygen" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Doxygen</span></div>
-        <div class="option-card" data-group="devtool" data-value="wkhtmltopdf" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">wkhtmltopdf</span></div>
-      </div>
-    </div>
+        <div class="section" id="sec-security">
+          <div class="section-header"><div class="section-icon" style="background:rgba(232,112,58,0.12)"></div><div><div class="section-title">Security</div></div><span class="section-count" id="security-count">0 selected</span></div>
+          <div class="section-controls"><button class="ctrl-btn" onclick="toggleGroup('security','all')">All</button><button class="ctrl-btn" onclick="toggleGroup('security','none')">None</button></div>
+          <div class="options-grid" id="grid-security"></div>
+        </div>
 
-    <!-- NETWORKING -->
-    <div class="section">
-      <div class="section-header">
-        <div class="section-icon" style="background:rgba(110,231,183,0.12)">🔌</div>
-        <div><div class="section-title">Networking Tools</div></div>
-        <span class="section-count" id="network-count">0 selected</span>
-      </div>
-      <div class="options-grid">
-        <div class="option-card" data-group="network" data-value="nmap" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">nmap</span><span class="option-tag">port scanner</span></div>
-        <div class="option-card" data-group="network" data-value="Wireshark" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Wireshark</span></div>
-        <div class="option-card" data-group="network" data-value="tcpdump" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">tcpdump</span></div>
-        <div class="option-card" data-group="network" data-value="mtr" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">mtr</span><span class="option-tag">traceroute</span></div>
-        <div class="option-card" data-group="network" data-value="iperf3" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">iperf3</span><span class="option-tag">bandwidth</span></div>
-        <div class="option-card" data-group="network" data-value="netcat" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">netcat</span></div>
-        <div class="option-card" data-group="network" data-value="dnsutils" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">dig / nslookup</span></div>
-        <div class="option-card" data-group="network" data-value="whois" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">whois</span></div>
-        <div class="option-card" data-group="network" data-value="net-tools" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">net-tools</span><span class="option-tag">ifconfig</span></div>
-        <div class="option-card" data-group="network" data-value="OpenVPN" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">OpenVPN</span></div>
-        <div class="option-card" data-group="network" data-value="WireGuard" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">WireGuard</span></div>
-        <div class="option-card" data-group="network" data-value="Tailscale" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Tailscale</span><span class="option-tag">mesh VPN</span></div>
-        <div class="option-card" data-group="network" data-value="speedtest-cli" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">speedtest-cli</span></div>
-        <div class="option-card" data-group="network" data-value="sshuttle" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">sshuttle</span></div>
-      </div>
-    </div>
+        <div class="section" id="sec-ai">
+          <div class="section-header"><div class="section-icon" style="background:rgba(129,140,248,0.12)"></div><div><div class="section-title">AI / ML</div></div><span class="section-count" id="aiml-count">0 selected</span></div>
+          <div class="section-controls"><button class="ctrl-btn" onclick="toggleGroup('aiml','all')">All</button><button class="ctrl-btn" onclick="toggleGroup('aiml','none')">None</button></div>
+          <div class="options-grid" id="grid-aiml"></div>
+        </div>
 
-    <!-- SECURITY -->
-    <div class="section">
-      <div class="section-header">
-        <div class="section-icon" style="background:rgba(232,112,58,0.12)">🔒</div>
-        <div><div class="section-title">Security Tools</div></div>
-        <span class="section-count" id="security-count">0 selected</span>
-      </div>
-      <div class="options-grid">
-        <div class="option-card" data-group="security" data-value="ufw" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">UFW</span><span class="option-tag">firewall</span></div>
-        <div class="option-card" data-group="security" data-value="fail2ban" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">fail2ban</span></div>
-        <div class="option-card" data-group="security" data-value="ClamAV" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">ClamAV</span><span class="option-tag">antivirus</span></div>
-        <div class="option-card" data-group="security" data-value="openssh-server" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">OpenSSH Server</span></div>
-        <div class="option-card" data-group="security" data-value="openssl" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">OpenSSL</span></div>
-        <div class="option-card" data-group="security" data-value="gnupg" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">GnuPG</span></div>
-        <div class="option-card" data-group="security" data-value="KeePassXC" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">KeePassXC</span></div>
-        <div class="option-card" data-group="security" data-value="Bitwarden" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Bitwarden</span></div>
-        <div class="option-card" data-group="security" data-value="mkcert" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">mkcert</span><span class="option-tag">local TLS</span></div>
-        <div class="option-card" data-group="security" data-value="certbot" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Certbot</span></div>
-        <div class="option-card" data-group="security" data-value="age" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">age</span><span class="option-tag">encryption</span></div>
-        <div class="option-card" data-group="security" data-value="sops" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">sops</span><span class="option-tag">secrets</span></div>
-        <div class="option-card" data-group="security" data-value="lynis" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Lynis</span><span class="option-tag">audit</span></div>
-        <div class="option-card" data-group="security" data-value="rkhunter" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">rkhunter</span></div>
-        <div class="option-card" data-group="security" data-value="pass" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">pass</span><span class="option-tag">password mgr</span></div>
-        <div class="option-card" data-group="security" data-value="Metasploit" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Metasploit</span><span class="option-tag">pentest</span></div>
-        <div class="option-card" data-group="security" data-value="John the Ripper" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">John the Ripper</span><span class="option-tag">pentest</span></div>
-        <div class="option-card" data-group="security" data-value="Hashcat" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Hashcat</span><span class="option-tag">pentest</span></div>
-      </div>
-    </div>
+        <div class="section" id="sec-apps">
+          <div class="section-header"><div class="section-icon" style="background:rgba(232,112,58,0.12)"></div><div><div class="section-title">Communication &amp; Productivity</div></div><span class="section-count" id="app-count">0 selected</span></div>
+          <div class="section-controls"><button class="ctrl-btn" onclick="toggleGroup('app','all')">All</button><button class="ctrl-btn" onclick="toggleGroup('app','none')">None</button></div>
+          <div class="options-grid" id="grid-app"></div>
+        </div>
 
-    <!-- AI/ML -->
-    <div class="section">
-      <div class="section-header">
-        <div class="section-icon" style="background:rgba(129,140,248,0.12)">🤖</div>
-        <div><div class="section-title">AI &amp; Machine Learning</div></div>
-        <span class="section-count" id="aiml-count">0 selected</span>
-      </div>
-      <div class="options-grid">
-        <div class="option-card" data-group="aiml" data-value="Ollama" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Ollama</span><span class="option-tag">local LLMs</span></div>
-        <div class="option-card" data-group="aiml" data-value="Open WebUI" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Open WebUI</span><span class="option-tag">docker</span></div>
-        <div class="option-card" data-group="aiml" data-value="PyTorch" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">PyTorch</span><span class="option-tag">pip</span></div>
-        <div class="option-card" data-group="aiml" data-value="TensorFlow" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">TensorFlow</span><span class="option-tag">pip</span></div>
-        <div class="option-card" data-group="aiml" data-value="Keras" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Keras</span><span class="option-tag">pip</span></div>
-        <div class="option-card" data-group="aiml" data-value="scikit-learn" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">scikit-learn</span></div>
-        <div class="option-card" data-group="aiml" data-value="Pandas" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Pandas</span></div>
-        <div class="option-card" data-group="aiml" data-value="NumPy" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">NumPy</span></div>
-        <div class="option-card" data-group="aiml" data-value="Matplotlib" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Matplotlib</span></div>
-        <div class="option-card" data-group="aiml" data-value="Jupyter" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">JupyterLab</span></div>
-        <div class="option-card" data-group="aiml" data-value="Hugging Face" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">HuggingFace</span></div>
-        <div class="option-card" data-group="aiml" data-value="LangChain" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">LangChain</span></div>
-        <div class="option-card" data-group="aiml" data-value="LlamaIndex" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">LlamaIndex</span></div>
-        <div class="option-card" data-group="aiml" data-value="OpenAI SDK" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">OpenAI SDK</span></div>
-        <div class="option-card" data-group="aiml" data-value="Anthropic SDK" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Anthropic SDK</span></div>
-        <div class="option-card" data-group="aiml" data-value="MLflow" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">MLflow</span></div>
-        <div class="option-card" data-group="aiml" data-value="DVC" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">DVC</span><span class="option-tag">data versioning</span></div>
-        <div class="option-card" data-group="aiml" data-value="CUDA Toolkit" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">CUDA Toolkit</span><span class="option-tag">nvidia</span></div>
-        <div class="option-card" data-group="aiml" data-value="Stable Diffusion WebUI" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">SD WebUI</span><span class="option-tag">auto1111</span></div>
-        <div class="option-card" data-group="aiml" data-value="ComfyUI" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">ComfyUI</span></div>
-      </div>
-    </div>
+        <div class="section" id="sec-media">
+          <div class="section-header"><div class="section-icon" style="background:rgba(251,191,36,0.12)"></div><div><div class="section-title">Media &amp; Graphics</div></div><span class="section-count" id="media-count">0 selected</span></div>
+          <div class="section-controls"><button class="ctrl-btn" onclick="toggleGroup('media','all')">All</button><button class="ctrl-btn" onclick="toggleGroup('media','none')">None</button></div>
+          <div class="options-grid" id="grid-media"></div>
+        </div>
 
-    <!-- APPS -->
-    <div class="section">
-      <div class="section-header">
-        <div class="section-icon" style="background:rgba(232,112,58,0.12)">📦</div>
-        <div><div class="section-title">Communication &amp; Productivity</div></div>
-        <span class="section-count" id="app-count">0 selected</span>
-      </div>
-      <div class="section-controls">
-        <button class="ctrl-btn" onclick="toggleGroup('app','all')">All</button>
-        <button class="ctrl-btn" onclick="toggleGroup('app','none')">None</button>
-      </div>
-      <div class="options-grid">
-        <div class="option-card" data-group="app" data-value="Slack" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Slack</span></div>
-        <div class="option-card" data-group="app" data-value="Discord" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Discord</span></div>
-        <div class="option-card" data-group="app" data-value="Zoom" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Zoom</span></div>
-        <div class="option-card" data-group="app" data-value="Telegram" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Telegram</span></div>
-        <div class="option-card" data-group="app" data-value="Signal" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Signal</span></div>
-        <div class="option-card" data-group="app" data-value="Microsoft Teams" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">MS Teams</span></div>
-        <div class="option-card" data-group="app" data-value="Element (Matrix)" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Element</span><span class="option-tag">matrix</span></div>
-        <div class="option-card" data-group="app" data-value="Mattermost" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Mattermost</span></div>
-        <div class="option-card" data-group="app" data-value="Thunderbird" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Thunderbird</span><span class="option-tag">email</span></div>
-        <div class="option-card" data-group="app" data-value="Spotify" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Spotify</span></div>
-        <div class="option-card" data-group="app" data-value="VLC" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">VLC</span></div>
-        <div class="option-card" data-group="app" data-value="LibreOffice" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">LibreOffice</span></div>
-        <div class="option-card" data-group="app" data-value="OnlyOffice" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">OnlyOffice</span></div>
-        <div class="option-card" data-group="app" data-value="WPS Office" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">WPS Office</span></div>
-        <div class="option-card" data-group="app" data-value="Obsidian" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Obsidian</span></div>
-        <div class="option-card" data-group="app" data-value="Logseq" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Logseq</span></div>
-        <div class="option-card" data-group="app" data-value="Notion" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Notion</span></div>
-        <div class="option-card" data-group="app" data-value="Anytype" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Anytype</span></div>
-        <div class="option-card" data-group="app" data-value="Nextcloud Desktop" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Nextcloud</span></div>
-        <div class="option-card" data-group="app" data-value="Dropbox" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Dropbox</span></div>
-        <div class="option-card" data-group="app" data-value="OBS Studio" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">OBS Studio</span></div>
-        <div class="option-card" data-group="app" data-value="Flameshot" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Flameshot</span><span class="option-tag">screenshots</span></div>
-        <div class="option-card" data-group="app" data-value="Remmina" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Remmina</span><span class="option-tag">remote desktop</span></div>
-        <div class="option-card" data-group="app" data-value="AnyDesk" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">AnyDesk</span></div>
-        <div class="option-card" data-group="app" data-value="TeamViewer" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">TeamViewer</span></div>
-        <div class="option-card" data-group="app" data-value="Kdenlive" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Kdenlive</span><span class="option-tag">video editor</span></div>
-        <div class="option-card" data-group="app" data-value="Shotcut" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Shotcut</span><span class="option-tag">video editor</span></div>
-        <div class="option-card" data-group="app" data-value="Calibre" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Calibre</span><span class="option-tag">ebooks</span></div>
-        <div class="option-card" data-group="app" data-value="qBittorrent" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">qBittorrent</span></div>
-        <div class="option-card" data-group="app" data-value="Timeshift" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Timeshift</span><span class="option-tag">backup</span></div>
-        <div class="option-card" data-group="app" data-value="Steam" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Steam</span><span class="option-tag">gaming</span></div>
-        <div class="option-card" data-group="app" data-value="Lutris" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Lutris</span><span class="option-tag">gaming</span></div>
-        <div class="option-card" data-group="app" data-value="Heroic Games" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Heroic Games</span><span class="option-tag">gaming</span></div>
-      </div>
-    </div>
+        <div class="section" id="sec-fonts">
+          <div class="section-header"><div class="section-icon" style="background:rgba(129,140,248,0.12)"></div><div><div class="section-title">Fonts</div></div><span class="section-count" id="font-count">0 selected</span></div>
+          <div class="section-controls"><button class="ctrl-btn" onclick="toggleGroup('font','all')">All</button><button class="ctrl-btn" onclick="toggleGroup('font','none')">None</button></div>
+          <div class="options-grid" id="grid-font"></div>
+        </div>
 
-    <!-- MEDIA & GRAPHICS -->
-    <div class="section">
-      <div class="section-header">
-        <div class="section-icon" style="background:rgba(251,191,36,0.12)">🎨</div>
-        <div><div class="section-title">Media &amp; Graphics</div></div>
-        <span class="section-count" id="media-count">0 selected</span>
-      </div>
-      <div class="options-grid">
-        <div class="option-card" data-group="media" data-value="GIMP" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">GIMP</span></div>
-        <div class="option-card" data-group="media" data-value="Inkscape" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Inkscape</span><span class="option-tag">vector</span></div>
-        <div class="option-card" data-group="media" data-value="Krita" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Krita</span><span class="option-tag">painting</span></div>
-        <div class="option-card" data-group="media" data-value="Blender" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Blender</span><span class="option-tag">3D</span></div>
-        <div class="option-card" data-group="media" data-value="Darktable" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Darktable</span><span class="option-tag">RAW photo</span></div>
-        <div class="option-card" data-group="media" data-value="RawTherapee" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">RawTherapee</span></div>
-        <div class="option-card" data-group="media" data-value="Audacity" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Audacity</span><span class="option-tag">audio</span></div>
-        <div class="option-card" data-group="media" data-value="Ardour" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Ardour</span><span class="option-tag">DAW</span></div>
-        <div class="option-card" data-group="media" data-value="LMMS" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">LMMS</span><span class="option-tag">music</span></div>
-        <div class="option-card" data-group="media" data-value="Pinta" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Pinta</span></div>
-        <div class="option-card" data-group="media" data-value="Scribus" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Scribus</span><span class="option-tag">publishing</span></div>
-        <div class="option-card" data-group="media" data-value="digiKam" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">digiKam</span><span class="option-tag">photo mgr</span></div>
-        <div class="option-card" data-group="media" data-value="Aseprite" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Aseprite</span><span class="option-tag">pixel art</span></div>
-        <div class="option-card" data-group="media" data-value="MKVToolNix" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">MKVToolNix</span></div>
-        <div class="option-card" data-group="media" data-value="FontForge" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">FontForge</span></div>
-      </div>
-    </div>
+        <div class="section" id="sec-gnome">
+          <div class="section-header"><div class="section-icon" style="background:rgba(110,231,183,0.12)"></div><div><div class="section-title">GNOME &amp; Desktop</div></div><span class="section-count" id="gnome-count">0 selected</span></div>
+          <div class="section-controls"><button class="ctrl-btn" onclick="toggleGroup('gnome','all')">All</button><button class="ctrl-btn" onclick="toggleGroup('gnome','none')">None</button></div>
+          <div class="options-grid" id="grid-gnome"></div>
+        </div>
 
-    <!-- FONTS -->
-    <div class="section">
-      <div class="section-header">
-        <div class="section-icon" style="background:rgba(129,140,248,0.12)">🔤</div>
-        <div><div class="section-title">Fonts</div></div>
-        <span class="section-count" id="font-count">0 selected</span>
-      </div>
-      <div class="options-grid">
-        <div class="option-card" data-group="font" data-value="JetBrains Mono" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">JetBrains Mono</span></div>
-        <div class="option-card" data-group="font" data-value="Fira Code" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Fira Code</span><span class="option-tag">ligatures</span></div>
-        <div class="option-card" data-group="font" data-value="Cascadia Code" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Cascadia Code</span></div>
-        <div class="option-card" data-group="font" data-value="Hack" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Hack</span></div>
-        <div class="option-card" data-group="font" data-value="Nerd Fonts" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Nerd Fonts</span><span class="option-tag">terminal icons</span></div>
-        <div class="option-card" data-group="font" data-value="Noto Fonts" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Noto Fonts</span></div>
-        <div class="option-card" data-group="font" data-value="Ubuntu Fonts" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Ubuntu Fonts</span></div>
-        <div class="option-card" data-group="font" data-value="Powerline Fonts" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Powerline Fonts</span></div>
-        <div class="option-card" data-group="font" data-value="Microsoft Core Fonts" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">MS Core Fonts</span><span class="option-tag">Arial…</span></div>
-        <div class="option-card" data-group="font" data-value="Inter" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Inter</span></div>
-      </div>
-    </div>
+      </main>
 
-    <!-- GNOME -->
-    <div class="section">
-      <div class="section-header">
-        <div class="section-icon" style="background:rgba(110,231,183,0.12)">🖌️</div>
-        <div><div class="section-title">GNOME &amp; Desktop</div></div>
-        <span class="section-count" id="gnome-count">0 selected</span>
-      </div>
-      <div class="options-grid">
-        <div class="option-card" data-group="gnome" data-value="GNOME Tweaks" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">GNOME Tweaks</span></div>
-        <div class="option-card" data-group="gnome" data-value="Extension Manager" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Extension Manager</span></div>
-        <div class="option-card" data-group="gnome" data-value="Dconf Editor" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Dconf Editor</span></div>
-        <div class="option-card" data-group="gnome" data-value="Ulauncher" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Ulauncher</span><span class="option-tag">launcher</span></div>
-        <div class="option-card" data-group="gnome" data-value="Albert" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Albert</span><span class="option-tag">launcher</span></div>
-        <div class="option-card" data-group="gnome" data-value="Plank" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Plank</span><span class="option-tag">dock</span></div>
-        <div class="option-card" data-group="gnome" data-value="Papirus Icons" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Papirus Icons</span></div>
-        <div class="option-card" data-group="gnome" data-value="Numix Icons" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Numix Icons</span></div>
-        <div class="option-card" data-group="gnome" data-value="Grub Customizer" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Grub Customizer</span></div>
-        <div class="option-card" data-group="gnome" data-value="Stacer" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Stacer</span><span class="option-tag">optimizer</span></div>
-        <div class="option-card" data-group="gnome" data-value="BleachBit" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">BleachBit</span><span class="option-tag">cleaner</span></div>
-        <div class="option-card" data-group="gnome" data-value="Synaptic" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Synaptic</span></div>
-        <div class="option-card" data-group="gnome" data-value="Conky" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Conky</span></div>
-        <div class="option-card" data-group="gnome" data-value="Variety" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Variety</span><span class="option-tag">wallpapers</span></div>
-        <div class="option-card" data-group="gnome" data-value="Gogh Themes" onclick="toggleCard(this)"><span class="check-box"></span><span class="option-label">Gogh Terminal Themes</span></div>
-      </div>
-    </div>
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <h2>Script Preview</h2>
+          <p id="sidebar-summary">Select packages to generate script</p>
+        </div>
+        <div class="script-preview" id="script-preview">
+          <div class="empty-preview">
+            <div class="icon"></div>
+            <div>Nothing selected yet.</div>
+            <div style="color:var(--text-muted)">Pick packages on the left<br>to build your script.</div>
+          </div>
+        </div>
+        <div class="sidebar-footer">
+          <button class="btn btn-primary" onclick="downloadScript()">Download install.sh</button>
+          <button class="btn btn-ghost" onclick="copyScript()">Copy to clipboard</button>
+        </div>
+      </aside>
 
-  </main>
+    </div><!-- end #tab-packages -->
 
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-    <div class="sidebar-header">
-      <h2>📜 Script Preview</h2>
-      <p id="sidebar-summary">Select packages to generate script</p>
-    </div>
-    <div class="script-preview" id="script-preview">
-      <div class="empty-preview">
-        <div class="icon">⬡</div>
-        <div>Nothing selected yet.</div>
-        <div style="color:var(--text-muted)">Pick packages on the left<br>to build your script.</div>
+    <!-- READY PACKAGES TAB -->
+    <div id="tab-presets" class="tab-pane" role="tabpanel">
+      <div class="presets-page">
+        <div class="presets-intro">
+          <h2 class="presets-heading">Ready <span>Packages</span></h2>
+          <p class="presets-subheading">One-click bundles — load a preset, then fine-tune in the Build Script tab.</p>
+        </div>
+        <div class="preset-categories" id="preset-categories"></div>
       </div>
-    </div>
-    <div class="sidebar-footer">
-      <button class="btn btn-primary" onclick="downloadScript()">⬇ Download install.sh</button>
-      <button class="btn btn-ghost" onclick="copyScript()">⎘ Copy to clipboard</button>
-    </div>
-  </aside>
+    </div><!-- end #tab-presets -->
 
-</div>
+  </div><!-- end .tab-content-wrapper -->
+
+</div><!-- end .shell -->
 
 <div class="toast" id="toast"></div>
 
@@ -709,6 +263,8 @@
 <script src="js/packages.js"></script>
 <script src="js/generator.js"></script>
 <script src="js/ui.js"></script>
+<script src="js/presets.js"></script>
+<script src="js/tabs.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

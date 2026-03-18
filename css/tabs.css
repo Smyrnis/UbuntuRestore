@@ -1,0 +1,199 @@
+/* ════════════════════════════════════════════════════════════════
+   tabs.css  —  Tab bar + left navigation panel
+   ════════════════════════════════════════════════════════════════ */
+
+/* ── Tab bar ─────────────────────────────────────────────────── */
+.tab-bar {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 0 36px;
+  background: rgba(9,9,11,0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 70px;  /* header height */
+  z-index: 100;
+}
+
+.tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 13px 16px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--text-dim);
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+  white-space: nowrap;
+  margin-bottom: -1px;
+}
+.tab-btn:hover  { color: var(--text); }
+.tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+.tab-icon { font-size: 13px; line-height: 1; }
+
+/*.tab-badge {
+  background: var(--accent);
+  color: #0b0d0f;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 2px 6px;
+  border-radius: 3px;
+  text-transform: uppercase;
+}*/
+
+/* ── Tab content wrapper ─────────────────────────────────────── */
+.tab-content-wrapper {
+  grid-column: 1 / -1;
+}
+
+/* ── Tab panes ───────────────────────────────────────────────── */
+.tab-pane { display: none; }
+
+/* Build Script tab: left-nav | main | right-sidebar */
+#tab-packages.active {
+  display: grid;
+  grid-template-columns: 152px 1fr 300px;
+  min-height: calc(100vh - 114px);
+  align-items: start;
+}
+
+/* Presets tab */
+#tab-presets.active { display: block; }
+
+/* ── Left nav panel ──────────────────────────────────────────── */
+.left-nav {
+  position: sticky;
+  top: 114px;
+  height: calc(100vh - 114px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 18px 0 24px;
+  border-right: 1px solid var(--border);
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.left-nav-title {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 0 14px 12px;
+  font-family: var(--mono);
+}
+
+.lnav-link {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 6px 14px;
+  text-decoration: none;
+  color: var(--text-dim);
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  border-left: 2px solid transparent;
+  transition: color 0.1s, background 0.1s, border-color 0.1s;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.lnav-link:hover {
+  color: var(--text);
+  background: var(--surface2);
+}
+.lnav-link.active {
+  color: var(--accent);
+  border-left-color: var(--accent);
+  background: var(--accent-glow);
+}
+
+/* lnav-icon spans are now empty, hide them */
+.lnav-icon { display: none; }
+.lnav-label { flex: 1; }
+
+/* Left nav count badge */
+.lnav-count {
+  font-size: 9px;
+  font-weight: 700;
+  background: var(--accent2-dim);
+  color: var(--accent2);
+  border-radius: 8px;
+  padding: 1px 5px;
+  min-width: 18px;
+  text-align: center;
+  display: none;
+}
+.lnav-link.has-items .lnav-count { display: inline-block; }
+
+/* Left nav scrollbar */
+.left-nav::-webkit-scrollbar { width: 2px; }
+.left-nav::-webkit-scrollbar-thumb { background: var(--border-mid); }
+
+/* ── Medium screens: icon-only left nav ──────────────────────── */
+@media (max-width: 1080px) {
+  #tab-packages.active {
+    grid-template-columns: 42px 1fr 260px;
+  }
+  .lnav-label, .lnav-count, .left-nav-title { display: none; }
+  .lnav-link {
+    padding: 9px 0;
+    justify-content: center;
+    gap: 0;
+    border-left-width: 0;
+    border-right: 2px solid transparent;
+  }
+  .lnav-link.active {
+    border-right-color: var(--accent);
+    border-left-color: transparent;
+  }
+}
+
+/* ── Small screens: horizontal pill nav ─────────────────────── */
+@media (max-width: 720px) {
+  #tab-packages.active {
+    grid-template-columns: 1fr;
+  }
+  .left-nav {
+    position: static;
+    height: auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 4px;
+    padding: 10px 14px;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    overflow: visible;
+  }
+  .lnav-label  { display: inline !important; font-size: 10px; }
+  .lnav-count  { display: none !important; }
+  .left-nav-title { display: none; }
+  .lnav-link {
+    border-left: none;
+    border-right: none;
+    border-radius: 4px;
+    padding: 4px 9px;
+    font-size: 10px;
+    gap: 5px;
+    border: 1px solid transparent;
+  }
+  .lnav-link:hover { border-color: var(--border-mid); }
+  .lnav-link.active {
+    border-color: rgba(232,112,58,0.4);
+    background: var(--accent-glow);
+    border-left-color: rgba(232,112,58,0.4);
+    border-right-color: rgba(232,112,58,0.4);
+  }
+}

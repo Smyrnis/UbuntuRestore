@@ -138,7 +138,12 @@ function updateCounts() {
     + (state.sysDeps   ? 1 : 0);
 
   const el = document.getElementById('total-count');
-  if (el) el.textContent = `${total} package${total !== 1 ? 's' : ''} selected`;
+  if (el) {
+    el.textContent = `${total} package${total !== 1 ? 's' : ''} selected`;
+    el.classList.toggle('has-items', total > 0);
+  }
+  // Update left-nav count badges
+  updateNavCounts(countMap);
 }
 
 // ── Sidebar ───────────────────────────────────────────────────────────────────
@@ -154,7 +159,6 @@ function renderSidebar(script) {
   if (total === 0 && !state.sysUpdate && !state.sysDeps) {
     preview.innerHTML = `
       <div class="empty-preview">
-        <div class="icon">⬡</div>
         <div>Nothing selected yet.</div>
         <div style="color:var(--text-muted)">Pick packages on the left<br>to build your script.</div>
       </div>`;
@@ -181,7 +185,7 @@ function syntaxHighlight(script) {
 
 // ── Toast ─────────────────────────────────────────────────────────────────────
 
-function showToast(message = '✓ Copied to clipboard!') {
+function showToast(message = 'Copied to clipboard') {
   const toast = document.getElementById('toast');
   toast.textContent = message;
   toast.classList.add('show');
