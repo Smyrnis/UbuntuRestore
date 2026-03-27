@@ -1,8 +1,3 @@
-/* ════════════════════════════════════════════════════════════════
-   styles.css  —  Core design system
-   ════════════════════════════════════════════════════════════════ */
-
-/* ── Variables ── */
 :root {
   --bg:           #09090b;
   --surface:      #0f1012;
@@ -26,12 +21,8 @@
   --radius:       8px;
   --radius-sm:    5px;
 }
-
-/* ── Reset ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
-
-/* ── Base ── */
 body {
   background: var(--bg);
   color: var(--text);
@@ -41,8 +32,6 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
 }
-
-/* Dot-grid background */
 body::before {
   content: '';
   position: fixed;
@@ -52,8 +41,6 @@ body::before {
   pointer-events: none;
   z-index: 0;
 }
-
-/* ── Shell ── */
 .shell {
   position: relative;
   z-index: 1;
@@ -64,8 +51,6 @@ body::before {
   max-width: 1440px;
   margin: 0 auto;
 }
-
-/* ── Header ── */
 header {
   grid-column: 1 / -1;
   padding: 22px 36px 18px;
@@ -81,7 +66,6 @@ header {
   top: 0;
   z-index: 110;
 }
-
 .logo-area h1 {
   font-family: var(--display);
   font-size: 24px;
@@ -97,13 +81,11 @@ header {
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
-
 .header-actions {
   display: flex;
   align-items: center;
   gap: 10px;
 }
-
 .badge {
   background: var(--surface2);
   border: 1px solid var(--border-mid);
@@ -120,8 +102,6 @@ header {
   border-color: rgba(110,231,183,0.3);
   color: var(--accent2);
 }
-
-/* Clear All button */
 .btn-clear {
   font-family: var(--mono);
   font-size: 12px;
@@ -142,8 +122,6 @@ header {
   background: rgba(224,82,82,0.06);
 }
 .btn-clear:active { transform: scale(0.97); }
-
-/* ── Main content area ── */
 .main-content {
   padding: 28px 32px 80px;
   overflow-y: auto;
@@ -151,8 +129,6 @@ header {
   border-right: 1px solid var(--border);
   scroll-behavior: smooth;
 }
-
-/* ── Script preview sidebar ── */
 .sidebar {
   position: sticky;
   top: 114px;
@@ -161,7 +137,6 @@ header {
   flex-direction: column;
   overflow: hidden;
 }
-
 .sidebar-header {
   padding: 18px 20px 14px;
   border-bottom: 1px solid var(--border);
@@ -170,7 +145,6 @@ header {
   flex-direction: column;
   gap: 4px;
 }
-
 .sidebar-header h2 {
   font-family: var(--display);
   font-size: 13px;
@@ -179,20 +153,17 @@ header {
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
-
 .sidebar-header p {
   color: var(--text-dim);
   font-size: 10px;
   letter-spacing: 0.03em;
 }
-
 .script-preview {
   flex: 1;
   overflow-y: auto;
   padding: 14px 16px;
   background: #060709;
 }
-
 .script-preview pre {
   font-size: 12px;
   line-height: 1.75;
@@ -200,13 +171,11 @@ header {
   white-space: pre-wrap;
   word-break: break-all;
 }
-
 .script-preview .sh-comment { color: #343d4d; }
 .script-preview .sh-cmd     { color: #5cb88e; }
 .script-preview .sh-flag    { color: #7c86e0; }
 .script-preview .sh-section { color: var(--accent); font-weight: 600; }
 .script-preview .sh-string  { color: #d4a64a; }
-
 .sidebar-footer {
   padding: 14px 16px;
   border-top: 1px solid var(--border);
@@ -216,8 +185,6 @@ header {
   flex-shrink: 0;
   background: var(--surface);
 }
-
-/* ── Buttons ── */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -234,27 +201,22 @@ header {
   letter-spacing: 0.04em;
   width: 100%;
 }
-
 .btn-primary {
   background: var(--accent);
   color: #0b0d0f;
 }
 .btn-primary:hover  { background: #f07a44; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(232,112,58,0.3); }
 .btn-primary:active { transform: translateY(0); box-shadow: none; }
-
 .btn-ghost {
   background: transparent;
   border: 1px solid var(--border-mid);
   color: var(--text-dim);
 }
 .btn-ghost:hover { border-color: var(--border-bright); color: var(--text); background: var(--surface2); }
-
-/* ── Section layout ── */
 .section {
   margin-bottom: 40px;
   scroll-margin-top: 20px;
 }
-
 .section-header {
   display: flex;
   align-items: center;
@@ -263,7 +225,6 @@ header {
   padding-bottom: 12px;
   border-bottom: 1px solid var(--border);
 }
-
 .section-icon {
   width: 3px;
   height: 28px;
@@ -271,7 +232,6 @@ header {
   flex-shrink: 0;
   align-self: center;
 }
-
 .section-title {
   font-family: var(--display);
   font-size: 15px;
@@ -279,14 +239,12 @@ header {
   color: var(--text);
   line-height: 1.2;
 }
-
 .section-subtitle {
   font-size: 11.5px;
   color: var(--text-dim);
   margin-top: 2px;
   letter-spacing: 0.02em;
 }
-
 .section-count {
   margin-left: auto;
   font-size: 11px;
@@ -303,15 +261,11 @@ header {
   border-color: rgba(110,231,183,0.3);
   color: var(--accent2);
 }
-
-/* ── Options grid ── */
 .options-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
   gap: 6px;
 }
-
-/* ── Option card ── */
 .option-card {
   position: relative;
   background: var(--surface);
@@ -324,17 +278,14 @@ header {
   display: flex;
   align-items: center;
 }
-
 .option-card:hover {
   border-color: var(--border-bright);
   background: var(--surface2);
 }
-
 .option-card.selected {
   border-color: rgba(110,231,183,0.45);
   background: rgba(110,231,183,0.04);
 }
-
 .check-box {
   width: 15px;
   height: 15px;
@@ -349,13 +300,11 @@ header {
   margin-right: 9px;
   transition: all 0.12s;
 }
-
 .option-card.selected .check-box {
   background: var(--accent2);
   border-color: var(--accent2);
   color: #06100a;
 }
-
 .option-label {
   font-size: 13px;
   color: var(--text);
@@ -366,7 +315,6 @@ header {
   white-space: nowrap;
 }
 .option-card.selected .option-label { color: #d1f5e8; }
-
 .option-tag {
   display: inline-block;
   font-size: 9px;
@@ -381,14 +329,11 @@ header {
   flex-shrink: 0;
 }
 .option-card.selected .option-tag { opacity: 0.5; }
-
-/* ── Radio cards (web server) ── */
 .radio-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
   gap: 6px;
 }
-
 .radio-card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -402,7 +347,6 @@ header {
 }
 .radio-card:hover { border-color: var(--border-bright); background: var(--surface2); }
 .radio-card.selected { border-color: rgba(129,140,248,0.45); background: var(--accent3-dim); }
-
 .radio-dot {
   width: 13px;
   height: 13px;
@@ -430,10 +374,7 @@ header {
 .radio-card.selected .radio-dot::after { opacity: 1; }
 .radio-label { font-size: 13px; color: var(--text); }
 .radio-card.selected .radio-label { color: #c7d2fe; }
-
-/* ── PHP version cards ── */
 .php-grid { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 4px; }
-
 .php-card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -447,15 +388,11 @@ header {
 }
 .php-card:hover { border-color: var(--border-bright); background: var(--surface2); }
 .php-card.selected { border-color: rgba(232,112,58,0.5); background: var(--accent-dim); }
-
 .php-version { font-size: 14px; font-weight: 700; letter-spacing: -0.3px; }
 .php-sub { font-size: 11px; color: var(--text-dim); margin-top: 3px; letter-spacing: 0.02em; }
 .php-card.selected .php-version { color: var(--accent); }
 .php-card.selected .php-sub { color: rgba(232,112,58,0.6); }
-
-/* ── Section controls ── */
 .section-controls { display: flex; gap: 6px; margin-bottom: 10px; }
-
 .ctrl-btn {
   font-family: var(--mono);
   font-size: 11px;
@@ -469,10 +406,7 @@ header {
   letter-spacing: 0.04em;
 }
 .ctrl-btn:hover { border-color: var(--border-bright); color: var(--text); background: var(--surface2); }
-
-/* ── PHP extension pills ── */
 .ext-pills { display: flex; flex-wrap: wrap; gap: 5px; }
-
 .ext-pill {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -490,8 +424,6 @@ header {
   border-color: rgba(232,112,58,0.4);
   color: var(--accent);
 }
-
-/* ── Subsection label ── */
 .subsection-label {
   font-size: 10px;
   color: var(--text-muted);
@@ -503,8 +435,6 @@ header {
   gap: 12px;
 }
 .ext-controls { display: flex; gap: 5px; }
-
-/* ── Empty state ── */
 .empty-preview {
   text-align: center;
   padding: 48px 20px;
@@ -512,9 +442,8 @@ header {
   font-size: 11px;
   line-height: 2.2;
 }
+.version-tag {font-size: 10px; color: var(--text-dim)}
 .empty-preview .icon { display: none; }
-
-/* ── Toast ── */
 .toast {
   position: fixed;
   bottom: 28px;
@@ -535,14 +464,11 @@ header {
   white-space: nowrap;
 }
 .toast.show { transform: translateX(-50%) translateY(0); }
-
-/* ── Scrollbars ── */
 ::-webkit-scrollbar { width: 4px; height: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border-mid); border-radius: 10px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--border-bright); }
 
-/* ── Responsive ── */
 @media (max-width: 900px) {
   .sidebar {
     position: static;

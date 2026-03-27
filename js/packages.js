@@ -1,11 +1,3 @@
-/**
- * packages.js
- * Pure data layer — no DOM, no state mutations.
- * Every package: { value, label?, tag?, lines[] }
- * To add/remove/update a package, only edit this file.
- */
-
-// ── PHP ───────────────────────────────────────────────────────────────────────
 const PHP_VERSIONS = [
   { value: '8.1', sub: 'Legacy LTS' },
   { value: '8.2', sub: 'Stable'     },
@@ -21,8 +13,6 @@ const PHP_EXTENSIONS = [
 ];
 
 const PHP_COMMON_EXTENSIONS = ['mysql','curl','gd','mbstring','xml','zip','intl'];
-
-// ── Databases ─────────────────────────────────────────────────────────────────
 const DATABASES = [
   { value: 'MariaDB', lines: ['echo "→ Installing MariaDB..."','sudo apt install -y mariadb-server mariadb-client','sudo systemctl enable --now mariadb'] },
   { value: 'MySQL', lines: ['echo "→ Installing MySQL..."','sudo apt install -y mysql-server mysql-client','sudo systemctl enable --now mysql'] },
@@ -38,10 +28,8 @@ const DATABASES = [
   { value: 'MinIO', tag: 'object storage', lines: ['wget -q https://dl.min.io/server/minio/release/linux-amd64/minio -O /tmp/minio','sudo install /tmp/minio /usr/local/bin/minio && rm /tmp/minio','echo "Start with: minio server /data/minio"'] },
   { value: 'Valkey', tag: 'redis-fork', lines: ['sudo apt install -y valkey || sudo snap install valkey || true'] },
 ];
-
-// ── Languages ─────────────────────────────────────────────────────────────────
 const LANGUAGES = [
-  { value: 'Node.js (LTS via NVM)', label: 'Node.js LTS', tag: 'nvm', lines: ['curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash','export NVM_DIR="$HOME/.nvm"','[ -s "$NVM_DIR/nvm.sh" ] && \\. "$NVM_DIR/nvm.sh"','nvm install --lts'] },
+  { value: 'Node.js (LTS via NVM)', label: 'Node.js LTS', tag: 'nvm', lines: ['curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh | bash','export NVM_DIR="$HOME/.nvm"','[ -s "$NVM_DIR/nvm.sh" ] && \\. "$NVM_DIR/nvm.sh"','nvm install --lts'] },
   { value: 'Bun', tag: 'js runtime', lines: ['curl -fsSL https://bun.sh/install | bash'] },
   { value: 'Deno', tag: 'js runtime', lines: ['curl -fsSL https://deno.land/install.sh | sh'] },
   { value: 'Python 3 + pip', lines: ['sudo apt install -y python3 python3-pip python3-venv python3-dev'] },
@@ -79,8 +67,6 @@ const LANGUAGES = [
   { value: 'V Lang', lines: ['sudo snap install vlang --classic || true'] },
   { value: 'Crystal', lines: ['curl -fsSL https://crystal-lang.org/install.sh | sudo bash'] },
 ];
-
-// ── Web Servers ───────────────────────────────────────────────────────────────
 const WEB_SERVERS = [
   { value: 'Apache2', lines: ['sudo apt install -y apache2','sudo systemctl enable --now apache2'] },
   { value: 'Nginx', lines: ['sudo apt install -y nginx','sudo systemctl enable --now nginx'] },
@@ -88,8 +74,6 @@ const WEB_SERVERS = [
   { value: 'Traefik', tag: 'proxy', lines: ['wget -q https://github.com/traefik/traefik/releases/latest/download/traefik_linux_amd64.tar.gz -O /tmp/traefik.tar.gz','tar -xzf /tmp/traefik.tar.gz -C /tmp && sudo install /tmp/traefik /usr/local/bin/','rm /tmp/traefik.tar.gz'] },
   { value: 'None', lines: [] },
 ];
-
-// ── DB Tools ──────────────────────────────────────────────────────────────────
 const DB_TOOLS = [
   { value: 'phpMyAdmin', lines: ['export DEBIAN_FRONTEND=noninteractive','sudo apt install -y phpmyadmin'] },
   { value: 'Adminer', lines: ['sudo mkdir -p /var/www/html/adminer','sudo wget -q https://www.adminer.org/latest.php -O /var/www/html/adminer/index.php'] },
@@ -102,8 +86,6 @@ const DB_TOOLS = [
   { value: 'MySQL Workbench', lines: ['sudo apt install -y mysql-workbench-community || sudo snap install mysql-workbench-community || true'] },
   { value: 'Beekeeper Studio', tag: 'snap', lines: ['sudo snap install beekeeper-studio'] },
 ];
-
-// ── Editors ───────────────────────────────────────────────────────────────────
 const EDITORS = [
   { value: 'VS Code', lines: ['sudo snap install code'] },
   { value: 'VS Codium', tag: 'FOSS', lines: ['wget -qO - https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg | sudo gpg --dearmor -o /usr/share/keyrings/vscodium-archive-keyring.gpg','echo "deb [signed-by=/usr/share/keyrings/vscodium-archive-keyring.gpg] https://paulcarroty.gitlab.io/vscodium-deb-rpm-repo/debs vscodium main" | sudo tee /etc/apt/sources.list.d/vscodium.list','sudo apt update && sudo apt install -y codium'] },
@@ -120,8 +102,6 @@ const EDITORS = [
   { value: 'Lapce', tag: 'rust-based', lines: ['sudo snap install lapce || true'] },
   { value: 'Helix', tag: 'modal', lines: ['sudo add-apt-repository ppa:maveonair/helix-editor -y','sudo apt update && sudo apt install -y helix'] },
 ];
-
-// ── IDEs ──────────────────────────────────────────────────────────────────────
 const IDES = [
   { value: 'IntelliJ IDEA CE', label: 'IntelliJ IDEA CE', tag: 'snap', lines: ['sudo snap install intellij-idea-community --classic'] },
   { value: 'IntelliJ IDEA Ultimate', label: 'IntelliJ Ultimate', tag: 'snap', lines: ['sudo snap install intellij-idea-ultimate --classic'] },
@@ -141,8 +121,6 @@ const IDES = [
   { value: 'Arduino IDE', lines: ['sudo snap install arduino'] },
   { value: 'Fleet', tag: 'JetBrains', lines: ['sudo snap install fleet --classic || true'] },
 ];
-
-// ── VCS ───────────────────────────────────────────────────────────────────────
 const VCS_TOOLS = [
   { value: 'Sourcegit (GUI)', label: 'Sourcegit', tag: 'gui', lines: ['curl -fsSL https://codeberg.org/api/packages/yataro/debian/repository.key | sudo tee /etc/apt/keyrings/sourcegit.asc','echo "deb [signed-by=/etc/apt/keyrings/sourcegit.asc, arch=amd64,arm64] https://codeberg.org/api/packages/yataro/debian generic main" | sudo tee /etc/apt/sources.list.d/sourcegit.list','sudo apt update && sudo apt install -y sourcegit'] },
   { value: 'GitKraken', tag: 'snap', lines: ['sudo snap install gitkraken --classic'] },
@@ -155,12 +133,15 @@ const VCS_TOOLS = [
   { value: 'pre-commit', lines: ['pip3 install pre-commit || true'] },
   { value: 'SVN', tag: 'subversion', lines: ['sudo apt install -y subversion'] },
 ];
-
-// ── Browsers ──────────────────────────────────────────────────────────────────
 const BROWSERS = [
   { value: 'Google Chrome', lines: ['wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -O /tmp/chrome.deb','sudo apt install -y /tmp/chrome.deb && rm /tmp/chrome.deb'] },
   { value: 'Firefox', lines: ['sudo apt install -y firefox'] },
-  { value: 'Brave', lines: ['sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg','echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list','sudo apt update && sudo apt install -y brave-browser'] },
+  { value: 'Brave', lines: [
+    'sudo apt install -y curl',
+    'sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg',
+    'sudo curl -fsSLo /etc/apt/sources.list.d/brave-browser-release.sources https://brave-browser-apt-release.s3.brave.com/brave-browser.sources',
+    'sudo apt update && sudo apt install -y brave-browser',
+  ]},
   { value: 'Chromium', tag: 'snap', lines: ['sudo snap install chromium'] },
   { value: 'Microsoft Edge', lines: ['curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | sudo gpg --dearmor > /usr/share/keyrings/microsoft-edge.gpg','echo "deb [signed-by=/usr/share/keyrings/microsoft-edge.gpg] https://packages.microsoft.com/repos/edge stable main" | sudo tee /etc/apt/sources.list.d/microsoft-edge.list','sudo apt update && sudo apt install -y microsoft-edge-stable'] },
   { value: 'Vivaldi', lines: ['wget -q https://downloads.vivaldi.com/stable/vivaldi-stable_amd64.deb -O /tmp/vivaldi.deb','sudo apt install -y /tmp/vivaldi.deb && rm /tmp/vivaldi.deb'] },
@@ -170,10 +151,16 @@ const BROWSERS = [
   { value: 'Lynx', tag: 'terminal', lines: ['sudo apt install -y lynx'] },
   { value: 'w3m', tag: 'terminal', lines: ['sudo apt install -y w3m'] },
 ];
-
-// ── Containers & Kubernetes ───────────────────────────────────────────────────
 const CONTAINERS = [
-  { value: 'Docker Engine', lines: ['curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg','echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list','sudo apt update && sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin','sudo usermod -aG docker "$USER"'] },
+  { value: 'Docker Engine', lines: [
+    'sudo apt update && sudo apt install -y ca-certificates curl',
+    'sudo install -m 0755 -d /etc/apt/keyrings',
+    'curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg',
+    'sudo chmod a+r /etc/apt/keyrings/docker.gpg',
+    'echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null',
+    'sudo apt update && sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin',
+    'sudo usermod -aG docker "$USER"',
+  ]},
   { value: 'Docker Compose v2', lines: ['sudo apt install -y docker-compose-plugin || true','docker compose version'] },
   { value: 'Portainer CE', tag: 'ui', lines: ['sudo docker volume create portainer_data','sudo docker run -d -p 8000:8000 -p 9443:9443 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest || true','echo "Portainer at https://localhost:9443"'] },
   { value: 'Podman', tag: 'daemonless', lines: ['sudo apt install -y podman'] },
@@ -188,8 +175,6 @@ const CONTAINERS = [
   { value: 'ctop', tag: 'container top', lines: ['wget -q https://github.com/bcicen/ctop/releases/latest/download/ctop-linux-amd64 -O /tmp/ctop','sudo install /tmp/ctop /usr/local/bin/ctop && rm /tmp/ctop'] },
   { value: 'Dive', tag: 'image explorer', lines: ['wget -q https://github.com/wagoodman/dive/releases/latest/download/dive_amd64.deb -O /tmp/dive.deb','sudo apt install -y /tmp/dive.deb && rm /tmp/dive.deb'] },
 ];
-
-// ── Cloud & IaC ───────────────────────────────────────────────────────────────
 const CLOUD = [
   { value: 'AWS CLI v2', label: 'AWS CLI', tag: 'amazon', lines: ['curl -fsSL "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o /tmp/awscliv2.zip','unzip -q /tmp/awscliv2.zip -d /tmp && sudo /tmp/aws/install && rm -rf /tmp/aws /tmp/awscliv2.zip'] },
   { value: 'Azure CLI', tag: 'microsoft', lines: ['curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash'] },
@@ -207,8 +192,6 @@ const CLOUD = [
   { value: 'Flux CD', tag: 'GitOps', lines: ['curl -s https://fluxcd.io/install.sh | sudo bash'] },
   { value: 'ArgoCD CLI', lines: ['curl -sSL -o /tmp/argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64','sudo install /tmp/argocd /usr/local/bin/argocd && rm /tmp/argocd'] },
 ];
-
-// ── CLI Tools ─────────────────────────────────────────────────────────────────
 const CLI_TOOLS = [
   { value: 'zsh + Oh My Zsh', lines: ['sudo apt install -y zsh','sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended || true','chsh -s $(which zsh) || true'] },
   { value: 'fish shell', lines: ['sudo apt install -y fish','echo "Set default: chsh -s $(which fish)"'] },
@@ -247,8 +230,6 @@ const CLI_TOOLS = [
   { value: 'Composer (PHP)', label: 'Composer', tag: 'php', lines: ['curl -sS https://getcomposer.org/installer | php -- --install-dir=/tmp','sudo mv /tmp/composer.phar /usr/local/bin/composer'] },
   { value: 'pnpm + yarn', lines: ['npm install -g pnpm yarn || true'] },
 ];
-
-// ── Dev Tools ─────────────────────────────────────────────────────────────────
 const DEV_TOOLS = [
   { value: 'make', label: 'make / cmake', lines: ['sudo apt install -y make cmake'] },
   { value: 'gcc extras', label: 'GCC Extras', lines: ['sudo apt install -y build-essential gcc g++ gdb'] },
@@ -276,8 +257,6 @@ const DEV_TOOLS = [
   { value: 'Doxygen', lines: ['sudo apt install -y doxygen graphviz'] },
   { value: 'wkhtmltopdf', lines: ['sudo apt install -y wkhtmltopdf'] },
 ];
-
-// ── Networking ────────────────────────────────────────────────────────────────
 const NETWORKING = [
   { value: 'nmap', tag: 'port scanner', lines: ['sudo apt install -y nmap'] },
   { value: 'Netcat', label: 'Netcat', lines: ['sudo apt install -y netcat-traditional'] },
@@ -291,8 +270,6 @@ const NETWORKING = [
   { value: 'Tailscale', lines: ['curl -fsSL https://tailscale.com/install.sh | sh'] },
   { value: 'ssh config', label: 'SSH hardening', lines: ['sudo apt install -y openssh-server','sudo systemctl enable --now ssh'] },
 ];
-
-// ── Security ──────────────────────────────────────────────────────────────────
 const SECURITY = [
   { value: 'fail2ban', lines: ['sudo apt install -y fail2ban','sudo systemctl enable --now fail2ban'] },
   { value: 'UFW', lines: ['sudo apt install -y ufw','sudo ufw --force enable','sudo ufw default deny incoming','sudo ufw default allow outgoing','sudo ufw allow ssh'] },
@@ -309,8 +286,6 @@ const SECURITY = [
   { value: 'age', tag: 'encryption', lines: ['sudo apt install -y age || true'] },
   { value: 'Metasploit', tag: 'pentesting', lines: ['curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > /tmp/msfinstall','chmod 755 /tmp/msfinstall && sudo /tmp/msfinstall && rm /tmp/msfinstall || true'] },
 ];
-
-// ── AI / ML ───────────────────────────────────────────────────────────────────
 const AI_ML = [
   { value: 'Ollama', tag: 'local LLMs', lines: ['curl -fsSL https://ollama.com/install.sh | sh'] },
   { value: 'PyTorch', tag: 'pip', lines: ['pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu || true'] },
@@ -329,8 +304,6 @@ const AI_ML = [
   { value: 'CUDA Toolkit', tag: 'nvidia', lines: ['sudo apt install -y nvidia-cuda-toolkit'] },
   { value: 'Open WebUI', tag: 'docker', lines: ['sudo docker run -d -p 3000:8080 --add-host=host.docker.internal:host-gateway -v open-webui:/app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:main || true','echo "Open WebUI running at http://localhost:3000"'] },
 ];
-
-// ── Communication & Productivity ──────────────────────────────────────────────
 const APPS = [
   { value: 'Slack', tag: 'snap', lines: ['sudo snap install slack --classic'] },
   { value: 'Discord', tag: 'deb', lines: ['wget -q "https://discord.com/api/download?platform=linux&format=deb" -O /tmp/discord.deb','sudo apt install -y /tmp/discord.deb && rm /tmp/discord.deb'] },
@@ -363,8 +336,6 @@ const APPS = [
   { value: 'Heroic Games Launcher', lines: ['sudo snap install heroic || true'] },
   { value: 'Calibre', tag: 'ebook', lines: ['sudo apt install -y calibre'] },
 ];
-
-// ── Media & Graphics ──────────────────────────────────────────────────────────
 const MEDIA = [
   { value: 'GIMP', lines: ['sudo apt install -y gimp'] },
   { value: 'Inkscape', lines: ['sudo apt install -y inkscape'] },
@@ -383,8 +354,6 @@ const MEDIA = [
   { value: 'Scribus', tag: 'desktop publishing', lines: ['sudo apt install -y scribus'] },
   { value: 'FontForge', tag: 'font editor', lines: ['sudo apt install -y fontforge'] },
 ];
-
-// ── Fonts ─────────────────────────────────────────────────────────────────────
 const FONTS = [
   { value: 'JetBrains Mono', lines: ['wget -q https://github.com/JetBrains/JetBrainsMono/releases/latest/download/JetBrainsMono.zip -O /tmp/JetBrainsMono.zip','sudo unzip -q /tmp/JetBrainsMono.zip "fonts/ttf/*" -d /usr/share/fonts/JetBrainsMono && rm /tmp/JetBrainsMono.zip','sudo fc-cache -fv'] },
   { value: 'Fira Code', tag: 'ligatures', lines: ['sudo apt install -y fonts-firacode'] },
@@ -397,8 +366,6 @@ const FONTS = [
   { value: 'Powerline Fonts', tag: 'terminal', lines: ['sudo apt install -y fonts-powerline'] },
   { value: 'Microsoft Core Fonts', label: 'MS Core Fonts', tag: 'Arial, Times…', lines: ['sudo apt install -y ttf-mscorefonts-installer','sudo fc-cache -fv'] },
 ];
-
-// ── GNOME & Desktop ───────────────────────────────────────────────────────────
 const GNOME_TOOLS = [
   { value: 'GNOME Tweaks', lines: ['sudo apt install -y gnome-tweaks'] },
   { value: 'Extension Manager', lines: ['sudo apt install -y gnome-shell-extension-manager'] },

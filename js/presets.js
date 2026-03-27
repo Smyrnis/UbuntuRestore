@@ -1,20 +1,4 @@
-/**
- * presets.js
- * Ready-made preset bundles — fully populated with real package values
- * that match the data-value attributes in packages.js.
- *
- * Each preset.packages maps state keys → array of package values.
- * preset.phpVersions selects PHP version cards.
- * preset.webserver sets the web server radio.
- */
-
-// ─────────────────────────────────────────────────────────────────────────────
-// PRESET DEFINITIONS
-// ─────────────────────────────────────────────────────────────────────────────
-
 const PRESET_CATEGORIES = [
-
-  // ── Coming from Windows ──────────────────────────────────────────────────
   {
     id: 'windows',
     title: 'Coming from Windows',
@@ -76,8 +60,6 @@ const PRESET_CATEGORIES = [
       },
     ],
   },
-
-  // ── Developer Bundles ────────────────────────────────────────────────────
   {
     id: 'developer',
     title: 'Developer Bundles',
@@ -182,8 +164,6 @@ const PRESET_CATEGORIES = [
       },
     ],
   },
-
-  // ── Server & Homelab ─────────────────────────────────────────────────────
   {
     id: 'server',
     title: 'Server & Homelab',
@@ -265,10 +245,6 @@ const PRESET_CATEGORIES = [
   },
 ];
 
-// ─────────────────────────────────────────────────────────────────────────────
-// APPLY / REMOVE PRESET
-// ─────────────────────────────────────────────────────────────────────────────
-
 const _appliedPresets = new Set();
 
 function applyPreset(presetId) {
@@ -289,7 +265,6 @@ function applyPreset(presetId) {
     _appliedPresets.add(presetId);
   }
 
-  // Update card UI
   const card = document.querySelector(`.preset-card[data-preset-id="${presetId}"]`);
   if (card) {
     card.classList.toggle('applied', !wasApplied);
@@ -307,7 +282,6 @@ function applyPreset(presetId) {
 }
 
 function _applyPreset(preset) {
-  // PHP versions
   if (preset.phpVersions) {
     preset.phpVersions.forEach(v => {
       if (!state.phpVersions.includes(v)) {
@@ -320,7 +294,6 @@ function _applyPreset(preset) {
     if (ext) ext.style.display = state.phpVersions.length ? 'block' : 'none';
   }
 
-  // Web server
   if (preset.webserver) {
     state.webserver = preset.webserver;
     document.querySelectorAll('.radio-card').forEach(c => {
@@ -328,7 +301,6 @@ function _applyPreset(preset) {
     });
   }
 
-  // Package groups
   if (preset.packages) {
     for (const [stateKey, values] of Object.entries(preset.packages)) {
       const group = _stateKeyToGroup(stateKey);
@@ -392,10 +364,6 @@ function _countPresetItems(preset) {
   if (preset.packages) for (const vals of Object.values(preset.packages)) n += vals.length;
   return n;
 }
-
-// ─────────────────────────────────────────────────────────────────────────────
-// RENDER PRESETS TAB
-// ─────────────────────────────────────────────────────────────────────────────
 
 function renderPresetsTab() {
   const container = document.getElementById('preset-categories');

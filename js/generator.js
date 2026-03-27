@@ -1,9 +1,3 @@
-/**
- * generator.js
- * Pure function — reads `state` + package definitions, returns a shell script string.
- * No DOM, no side effects.
- */
-
 function generateScript() {
   const lines = [];
 
@@ -21,7 +15,6 @@ function generateScript() {
   lines.push('sudo -v');
   lines.push('');
 
-  // System
   if (state.sysUpdate || state.sysDeps) {
     lines.push('# ── System Update ────────────────────────────────────────────────────────────');
     if (state.sysUpdate) {
@@ -37,7 +30,6 @@ function generateScript() {
     lines.push('');
   }
 
-  // PHP
   if (state.phpVersions.length > 0) {
     lines.push('# ── PHP ─────────────────────────────────────────────────────────────────────');
     lines.push('echo "→ Adding Ondrej PHP PPA..."');
@@ -55,7 +47,6 @@ function generateScript() {
     lines.push('');
   }
 
-  // Generic section emitter — looks up each value in the definition array
   function emitSection(heading, selected, definitions) {
     if (!selected || selected.length === 0) return;
     const bar = '─'.repeat(Math.max(0, 76 - heading.length));
@@ -70,7 +61,6 @@ function generateScript() {
   emitSection('Databases',        state.dbs,        DATABASES);
   emitSection('Languages',        state.langs,       LANGUAGES);
 
-  // Web server (single-select)
   if (state.webserver && state.webserver !== 'None') {
     const ws = WEB_SERVERS.find(w => w.value === state.webserver);
     if (ws && ws.lines.length) {
@@ -97,7 +87,6 @@ function generateScript() {
   emitSection('Fonts',            state.fonts,       FONTS);
   emitSection('GNOME',            state.gnome,       GNOME_TOOLS);
 
-  // Footer
   lines.push('# ── Done ─────────────────────────────────────────────────────────────────────');
   lines.push('echo ""');
   lines.push('echo "✓ Installation complete!"');

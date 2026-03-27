@@ -1,9 +1,4 @@
-/**
- * main.js — entry point
- */
-
 document.addEventListener('DOMContentLoaded', () => {
-  // Render grids
   renderGrid('grid-db',        DATABASES,   'db');
   renderGrid('grid-lang',      LANGUAGES,   'lang');
   renderGrid('grid-dbtool',    DB_TOOLS,    'dbtool');
@@ -24,7 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
   renderGrid('grid-gnome',     GNOME_TOOLS, 'gnome');
   renderWebserverGrid('grid-webserver');
 
-  // PHP pills
   renderExtPills();
   document.getElementById('ext-pills').addEventListener('click', e => {
     const pill = e.target.closest('.ext-pill');
@@ -39,16 +33,11 @@ document.addEventListener('DOMContentLoaded', () => {
     updateAll();
   });
 
-  // Presets tab
   renderPresetsTab();
-
-  // Left-nav
   initLeftNav();
 
   updateAll();
 });
-
-// ── Grid renderers ────────────────────────────────────────────────────────────
 
 function renderGrid(id, defs, group) {
   const el = document.getElementById(id);
@@ -80,8 +69,6 @@ function renderExtPills() {
   }).join('');
 }
 
-// ── Left-nav ──────────────────────────────────────────────────────────────────
-
 function initLeftNav() {
   const scroller = document.getElementById('main-packages');
   if (!scroller) return;
@@ -90,15 +77,12 @@ function initLeftNav() {
   const sections = links.map(l => document.getElementById(l.dataset.sec)).filter(Boolean);
   if (!links.length || !sections.length) return;
 
-  // ── Click: scroll section to CENTER of the viewport ──────────────────────
   links.forEach(link => {
     link.addEventListener('click', e => {
       e.preventDefault();
       const sec = document.getElementById(link.dataset.sec);
       if (!sec) return;
 
-      // Target: place the section's top at ~35% down the scroller height
-      // (feels like centre; pure 50% feels too low when section is tall)
       const offset = Math.round(scroller.clientHeight * 0.30);
       const target = sec.offsetTop - offset;
 
@@ -106,36 +90,22 @@ function initLeftNav() {
     });
   });
 
-  // ── Scroll spy ───────────────────────────────────────────────────────────
-  //
-  // Two-pass algorithm that correctly handles the bottom-of-page problem:
-  //
-  // Pass 1 (normal): find the last section whose top has scrolled past
-  //   a trigger line 40% from the top of the visible area.
-  //
-  // Pass 2 (bottom clamp): if we're within 8px of the bottom of the
-  //   scrollable content, force the LAST section active regardless.
-  //
   function updateActive() {
     const scrollTop      = scroller.scrollTop;
     const clientHeight   = scroller.clientHeight;
     const scrollHeight   = scroller.scrollHeight;
     const triggerY       = scrollTop + clientHeight * 0.40;
 
-    // Pass 1 — last section whose offsetTop is above the trigger line
     let activeIdx = 0;
     for (let i = 0; i < sections.length; i++) {
       if (sections[i].offsetTop <= triggerY) activeIdx = i;
     }
 
-    // Pass 2 — bottom clamp: if at (or very near) the bottom, always
-    // activate the last section so Fonts / GNOME can light up
     const atBottom = scrollTop + clientHeight >= scrollHeight - 8;
     if (atBottom) activeIdx = sections.length - 1;
 
     links.forEach((l, i) => l.classList.toggle('active', i === activeIdx));
 
-    // Keep active link visible inside the left-nav's own scroll
     const nav        = document.getElementById('left-nav');
     const activeLink = links[activeIdx];
     if (nav && activeLink) {
@@ -151,8 +121,6 @@ function initLeftNav() {
   scroller.addEventListener('scroll', updateActive, { passive: true });
   updateActive();
 }
-
-// ── Nav count badge updates ───────────────────────────────────────────────────
 
 function updateNavCounts(countMap) {
   const secCountMap = {
@@ -189,7 +157,6 @@ function updateNavCounts(countMap) {
     link.classList.toggle('has-items', n > 0);
   });
 
-  // System section
   const sysLink = document.querySelector('.lnav-link[data-sec="sec-system"]');
   if (sysLink) {
     const n = (state.sysUpdate ? 1 : 0) + (state.sysDeps ? 1 : 0);
@@ -199,7 +166,6 @@ function updateNavCounts(countMap) {
     sysLink.classList.toggle('has-items', n > 0);
   }
 
-  // PHP section
   const phpLink = document.querySelector('.lnav-link[data-sec="sec-php"]');
   if (phpLink) {
     const n = state.phpVersions.length;
@@ -209,8 +175,6 @@ function updateNavCounts(countMap) {
     phpLink.classList.toggle('has-items', n > 0);
   }
 }
-
-// ── Clear all ─────────────────────────────────────────────────────────────────
 
 function clearAll() {
   state.sysUpdate = false;
@@ -252,8 +216,6 @@ function clearAll() {
   updateAll();
   showToast('All selections cleared');
 }
-
-// ── Sidebar actions ───────────────────────────────────────────────────────────
 
 function downloadScript() {
   const blob = new Blob([generateScript()], { type: 'text/plain' });

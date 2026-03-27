@@ -1,10 +1,3 @@
-/**
- * ui.js
- * All DOM interactions: toggle handlers, count badges, sidebar rendering.
- */
-
-// ── Card toggles ──────────────────────────────────────────────────────────────
-
 function toggleSysCard(id) {
   const card = document.getElementById(id + '-card');
   const nowSelected = !card.classList.contains('selected');
@@ -45,8 +38,6 @@ function selectWebserver(card) {
   updateAll();
 }
 
-// ── Bulk helpers ──────────────────────────────────────────────────────────────
-
 function toggleGroup(group, mode) {
   const cards = document.querySelectorAll(`.option-card[data-group="${group}"]`);
   const check = mode === 'all';
@@ -83,8 +74,6 @@ function selectCommonExt() {
   updateAll();
 }
 
-// ── State sync ────────────────────────────────────────────────────────────────
-
 const GROUP_MAP = {
   db: 'dbs', lang: 'langs', dbtool: 'dbtools', editor: 'editors',
   ide: 'ides', vcs: 'vcs', browser: 'browsers', container: 'containers',
@@ -100,8 +89,6 @@ function syncGroupToState(group) {
     document.querySelectorAll(`.option-card[data-group="${group}"].selected`)
   ).map(card => card.dataset.value);
 }
-
-// ── Count badges ──────────────────────────────────────────────────────────────
 
 function updateCounts() {
   const countMap = {
@@ -142,11 +129,8 @@ function updateCounts() {
     el.textContent = `${total} package${total !== 1 ? 's' : ''} selected`;
     el.classList.toggle('has-items', total > 0);
   }
-  // Update left-nav count badges
   updateNavCounts(countMap);
 }
-
-// ── Sidebar ───────────────────────────────────────────────────────────────────
 
 function renderSidebar(script) {
   const preview = document.getElementById('script-preview');
@@ -183,16 +167,12 @@ function syntaxHighlight(script) {
   }).join('\n');
 }
 
-// ── Toast ─────────────────────────────────────────────────────────────────────
-
 function showToast(message = 'Copied to clipboard') {
   const toast = document.getElementById('toast');
   toast.textContent = message;
   toast.classList.add('show');
   setTimeout(() => toast.classList.remove('show'), 2200);
 }
-
-// ── Master update ─────────────────────────────────────────────────────────────
 
 function updateAll() {
   updateCounts();

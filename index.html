@@ -13,7 +13,6 @@
 </head>
 <body>
 <div class="shell">
-
   <header>
     <div class="logo-area">
       <h1>Ubuntu <span>Restore</span></h1>
@@ -22,9 +21,9 @@
     <div class="header-actions">
       <span class="badge" id="total-count">0 packages selected</span>
       <button class="btn-clear" onclick="clearAll()" title="Clear all selections">Clear all</button>
+      <p class="version-tag">Version 0.3.2</p>
     </div>
   </header>
-
   <nav class="tab-bar" role="tablist">
     <button class="tab-btn active" data-tab="packages" role="tab" aria-selected="true" onclick="switchTab('packages')">
       <span class="tab-label">Build Script</span>
@@ -34,12 +33,8 @@
       <span class="tab-badge"></span>
     </button>
   </nav>
-
   <div class="tab-content-wrapper">
-
-    <!-- BUILD SCRIPT TAB -->
     <div id="tab-packages" class="tab-pane active" role="tabpanel">
-
       <nav class="left-nav" id="left-nav" aria-label="Section navigation">
         <div class="left-nav-title">Jump to</div>
         <a class="lnav-link" href="#sec-system" data-sec="sec-system"><span class="lnav-label">System</span></a>
@@ -64,9 +59,7 @@
         <a class="lnav-link" href="#sec-fonts" data-sec="sec-fonts"><span class="lnav-label">Fonts</span></a>
         <a class="lnav-link" href="#sec-gnome" data-sec="sec-gnome"><span class="lnav-label">GNOME</span></a>
       </nav>
-
       <main class="main-content" id="main-packages">
-
         <div class="section" id="sec-system">
           <div class="section-header">
             <div class="section-icon" style="background:rgba(232,112,58,0.12)"></div>
@@ -81,7 +74,6 @@
             </div>
           </div>
         </div>
-
         <div class="section" id="sec-php">
           <div class="section-header">
             <div class="section-icon" style="background:rgba(129,140,248,0.12)"></div>
@@ -106,122 +98,101 @@
             <div class="ext-pills" id="ext-pills"></div>
           </div>
         </div>
-
         <div class="section" id="sec-db">
           <div class="section-header"><div class="section-icon" style="background:rgba(110,231,183,0.12)"></div><div><div class="section-title">Databases</div></div><span class="section-count" id="db-count">0 selected</span></div>
           <div class="section-controls"><button class="ctrl-btn" onclick="toggleGroup('db','all')">All</button><button class="ctrl-btn" onclick="toggleGroup('db','none')">None</button></div>
           <div class="options-grid" id="grid-db"></div>
         </div>
-
         <div class="section" id="sec-lang">
           <div class="section-header"><div class="section-icon" style="background:rgba(251,191,36,0.12)"></div><div><div class="section-title">Languages &amp; Runtimes</div></div><span class="section-count" id="lang-count">0 selected</span></div>
           <div class="section-controls"><button class="ctrl-btn" onclick="toggleGroup('lang','all')">All</button><button class="ctrl-btn" onclick="toggleGroup('lang','none')">None</button></div>
           <div class="options-grid" id="grid-lang"></div>
         </div>
-
         <div class="section" id="sec-webserver">
           <div class="section-header"><div class="section-icon" style="background:rgba(232,112,58,0.12)"></div><div><div class="section-title">Web Server</div><div class="section-subtitle">Single selection</div></div></div>
           <div class="options-grid" id="grid-webserver"></div>
         </div>
-
         <div class="section" id="sec-dbtool">
           <div class="section-header"><div class="section-icon" style="background:rgba(110,231,183,0.12)"></div><div><div class="section-title">Database Tools</div></div><span class="section-count" id="dbtool-count">0 selected</span></div>
           <div class="section-controls"><button class="ctrl-btn" onclick="toggleGroup('dbtool','all')">All</button><button class="ctrl-btn" onclick="toggleGroup('dbtool','none')">None</button></div>
           <div class="options-grid" id="grid-dbtool"></div>
         </div>
-
         <div class="section" id="sec-editor">
           <div class="section-header"><div class="section-icon" style="background:rgba(129,140,248,0.12)"></div><div><div class="section-title">Editors</div></div><span class="section-count" id="editor-count">0 selected</span></div>
           <div class="section-controls"><button class="ctrl-btn" onclick="toggleGroup('editor','all')">All</button><button class="ctrl-btn" onclick="toggleGroup('editor','none')">None</button></div>
           <div class="options-grid" id="grid-editor"></div>
         </div>
-
         <div class="section" id="sec-ide">
           <div class="section-header"><div class="section-icon" style="background:rgba(232,112,58,0.12)"></div><div><div class="section-title">IDEs</div></div><span class="section-count" id="ide-count">0 selected</span></div>
           <div class="section-controls"><button class="ctrl-btn" onclick="toggleGroup('ide','all')">All</button><button class="ctrl-btn" onclick="toggleGroup('ide','none')">None</button></div>
           <div class="options-grid" id="grid-ide"></div>
         </div>
-
         <div class="section" id="sec-vcs">
           <div class="section-header"><div class="section-icon" style="background:rgba(110,231,183,0.12)"></div><div><div class="section-title">Version Control</div></div><span class="section-count" id="vcs-count">0 selected</span></div>
           <div class="section-controls"><button class="ctrl-btn" onclick="toggleGroup('vcs','all')">All</button><button class="ctrl-btn" onclick="toggleGroup('vcs','none')">None</button></div>
           <div class="options-grid" id="grid-vcs"></div>
         </div>
-
         <div class="section" id="sec-browser">
           <div class="section-header"><div class="section-icon" style="background:rgba(251,191,36,0.12)"></div><div><div class="section-title">Browsers</div></div><span class="section-count" id="browser-count">0 selected</span></div>
           <div class="section-controls"><button class="ctrl-btn" onclick="toggleGroup('browser','all')">All</button><button class="ctrl-btn" onclick="toggleGroup('browser','none')">None</button></div>
           <div class="options-grid" id="grid-browser"></div>
         </div>
-
         <div class="section" id="sec-container">
           <div class="section-header"><div class="section-icon" style="background:rgba(129,140,248,0.12)"></div><div><div class="section-title">Containers &amp; Kubernetes</div></div><span class="section-count" id="container-count">0 selected</span></div>
           <div class="section-controls"><button class="ctrl-btn" onclick="toggleGroup('container','all')">All</button><button class="ctrl-btn" onclick="toggleGroup('container','none')">None</button></div>
           <div class="options-grid" id="grid-container"></div>
         </div>
-
         <div class="section" id="sec-cloud">
           <div class="section-header"><div class="section-icon" style="background:rgba(110,231,183,0.12)"></div><div><div class="section-title">Cloud &amp; IaC</div></div><span class="section-count" id="cloud-count">0 selected</span></div>
           <div class="section-controls"><button class="ctrl-btn" onclick="toggleGroup('cloud','all')">All</button><button class="ctrl-btn" onclick="toggleGroup('cloud','none')">None</button></div>
           <div class="options-grid" id="grid-cloud"></div>
         </div>
-
         <div class="section" id="sec-cli">
           <div class="section-header"><div class="section-icon" style="background:rgba(232,112,58,0.12)"></div><div><div class="section-title">CLI Tools &amp; Shell</div></div><span class="section-count" id="cli-count">0 selected</span></div>
           <div class="section-controls"><button class="ctrl-btn" onclick="toggleGroup('cli','all')">All</button><button class="ctrl-btn" onclick="toggleGroup('cli','none')">None</button></div>
           <div class="options-grid" id="grid-cli"></div>
         </div>
-
         <div class="section" id="sec-devtool">
           <div class="section-header"><div class="section-icon" style="background:rgba(251,191,36,0.12)"></div><div><div class="section-title">Dev Tools &amp; Build</div></div><span class="section-count" id="devtool-count">0 selected</span></div>
           <div class="section-controls"><button class="ctrl-btn" onclick="toggleGroup('devtool','all')">All</button><button class="ctrl-btn" onclick="toggleGroup('devtool','none')">None</button></div>
           <div class="options-grid" id="grid-devtool"></div>
         </div>
-
         <div class="section" id="sec-network">
           <div class="section-header"><div class="section-icon" style="background:rgba(110,231,183,0.12)"></div><div><div class="section-title">Networking</div></div><span class="section-count" id="network-count">0 selected</span></div>
           <div class="section-controls"><button class="ctrl-btn" onclick="toggleGroup('network','all')">All</button><button class="ctrl-btn" onclick="toggleGroup('network','none')">None</button></div>
           <div class="options-grid" id="grid-network"></div>
         </div>
-
         <div class="section" id="sec-security">
           <div class="section-header"><div class="section-icon" style="background:rgba(232,112,58,0.12)"></div><div><div class="section-title">Security</div></div><span class="section-count" id="security-count">0 selected</span></div>
           <div class="section-controls"><button class="ctrl-btn" onclick="toggleGroup('security','all')">All</button><button class="ctrl-btn" onclick="toggleGroup('security','none')">None</button></div>
           <div class="options-grid" id="grid-security"></div>
         </div>
-
         <div class="section" id="sec-ai">
           <div class="section-header"><div class="section-icon" style="background:rgba(129,140,248,0.12)"></div><div><div class="section-title">AI / ML</div></div><span class="section-count" id="aiml-count">0 selected</span></div>
           <div class="section-controls"><button class="ctrl-btn" onclick="toggleGroup('aiml','all')">All</button><button class="ctrl-btn" onclick="toggleGroup('aiml','none')">None</button></div>
           <div class="options-grid" id="grid-aiml"></div>
         </div>
-
         <div class="section" id="sec-apps">
           <div class="section-header"><div class="section-icon" style="background:rgba(232,112,58,0.12)"></div><div><div class="section-title">Communication &amp; Productivity</div></div><span class="section-count" id="app-count">0 selected</span></div>
           <div class="section-controls"><button class="ctrl-btn" onclick="toggleGroup('app','all')">All</button><button class="ctrl-btn" onclick="toggleGroup('app','none')">None</button></div>
           <div class="options-grid" id="grid-app"></div>
         </div>
-
         <div class="section" id="sec-media">
           <div class="section-header"><div class="section-icon" style="background:rgba(251,191,36,0.12)"></div><div><div class="section-title">Media &amp; Graphics</div></div><span class="section-count" id="media-count">0 selected</span></div>
           <div class="section-controls"><button class="ctrl-btn" onclick="toggleGroup('media','all')">All</button><button class="ctrl-btn" onclick="toggleGroup('media','none')">None</button></div>
           <div class="options-grid" id="grid-media"></div>
         </div>
-
         <div class="section" id="sec-fonts">
           <div class="section-header"><div class="section-icon" style="background:rgba(129,140,248,0.12)"></div><div><div class="section-title">Fonts</div></div><span class="section-count" id="font-count">0 selected</span></div>
           <div class="section-controls"><button class="ctrl-btn" onclick="toggleGroup('font','all')">All</button><button class="ctrl-btn" onclick="toggleGroup('font','none')">None</button></div>
           <div class="options-grid" id="grid-font"></div>
         </div>
-
         <div class="section" id="sec-gnome">
           <div class="section-header"><div class="section-icon" style="background:rgba(110,231,183,0.12)"></div><div><div class="section-title">GNOME &amp; Desktop</div></div><span class="section-count" id="gnome-count">0 selected</span></div>
           <div class="section-controls"><button class="ctrl-btn" onclick="toggleGroup('gnome','all')">All</button><button class="ctrl-btn" onclick="toggleGroup('gnome','none')">None</button></div>
           <div class="options-grid" id="grid-gnome"></div>
         </div>
-
       </main>
-
       <aside class="sidebar">
         <div class="sidebar-header">
           <h2>Script Preview</h2>
@@ -239,10 +210,8 @@
           <button class="btn btn-ghost" onclick="copyScript()">Copy to clipboard</button>
         </div>
       </aside>
+    </div>
 
-    </div><!-- end #tab-packages -->
-
-    <!-- READY PACKAGES TAB -->
     <div id="tab-presets" class="tab-pane" role="tabpanel">
       <div class="presets-page">
         <div class="presets-intro">
@@ -251,14 +220,10 @@
         </div>
         <div class="preset-categories" id="preset-categories"></div>
       </div>
-    </div><!-- end #tab-presets -->
-
-  </div><!-- end .tab-content-wrapper -->
-
-</div><!-- end .shell -->
-
+    </div>
+  </div>
+</div>
 <div class="toast" id="toast"></div>
-
 <script src="js/state.js"></script>
 <script src="js/packages.js"></script>
 <script src="js/generator.js"></script>
