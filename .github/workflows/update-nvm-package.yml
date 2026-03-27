@@ -1,0 +1,73 @@
+name: Auto-Update Install Commands
+on:
+  schedule:
+    - cron: '0 8 * * 1' #Cronjob runs every Monday at 8 pm.
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-packages:
+    name: Check & update pinned versions
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Resolve latest NVM version
+        id: nvm
+        run: |
+          LATEST=$(curl -fsSL \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            https://api.github.com/repos/nvm-sh/nvm/releases/latest \
+            | jq -r '.tag_name')
+          echo "version=$LATEST" >> "$GITHUB_OUTPUT"
+          echo "NVM latest: $LATEST"
+
+      - name: Patch NVM version in packages.js
+        id: patch
+        env:
+          NVM_VERSION: ${{ steps.nvm.outputs.version }}
+        run: |
+          FILE="js/packages.js"
+
+          # Extract the version currently in the file (e.g. v0.40.4)
+          CURRENT=$(grep -oP '(?<=nvm-sh/nvm/)[^/]+(?=/install\.sh)' "$FILE" | head -1)
+          echo "Current NVM in file : $CURRENT"
+          echo "Latest NVM from API : $NVM_VERSION"
+
+          if [ "$CURRENT" = "$NVM_VERSION" ]; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo " NVM is already up to date."
+          else
+            # Replace the old version string with the new one
+            sed -i "s|nvm-sh/nvm/${CURRENT}/install\.sh|nvm-sh/nvm/${NVM_VERSION}/install.sh|g" "$FILE"
+            echo "changed=true"  >> "$GITHUB_OUTPUT"
+            echo "::notice::NVM updated $CURRENT → $NVM_VERSION"
+          fi
+
+      - name: Create Pull Request
+        if: steps.patch.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: auto/update-install-commands
+          commit-message: "chore: auto-update install commands"
+          title: "chore: auto-update install commands"
+          body: |
+            ##  Automated install-command update
+
+            | Tool | Old | New |
+            |------|-----|-----|
+            | NVM  | (previous) | `${{ steps.nvm.outputs.version }}` |
+
+            This PR was opened automatically by the **Auto-Update Install Commands** workflow.
+            Please review and merge if everything looks correct.
+          labels: |
+            dependencies
+            automated
+          delete-branch: true
